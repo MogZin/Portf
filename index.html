@@ -1,198 +1,287 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none';"
+      content="default-src 'self'; img-src 'self' data: https://picsum.photos https://placehold.co; style-src 'self'; script-src 'self'; media-src 'self' https://cdn.coverr.co; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none';"
     />
-    <meta name="description" content="VF SHOES: loja de tênis com catálogo animado, banners, favoritos, carrinho e atendimento por WhatsApp." />
-    <title>VF SHOES | Loja de Tênis</title>
+    <meta
+      name="description"
+      content="VF SHOES — A melhor loja de tênis. Vitrine digital com catálogo, filtros, tamanhos e compra direcionada ao WhatsApp."
+    />
+    <title>VF SHOES | A melhor loja de tênis</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div id="loader" class="loader" aria-live="polite" aria-label="Carregando site VF SHOES">
-      <div class="loader__logo">VF SHOES</div>
-      <div class="loader__bar"><span></span></div>
-      <small>Entrando na experiência premium...</small>
+    <div id="loader" class="loader" aria-live="polite" aria-label="Carregando site">
+      <strong>VF SHOES</strong>
+      <span>A melhor loja de tênis</span>
+      <div class="loader__bar"><i></i></div>
     </div>
 
-    <header class="hero">
-      <div class="promo-strip">
-        <span>🔥 Até 40% OFF em modelos selecionados</span>
-        <span>🚚 Frete rápido para todo Brasil</span>
-        <span>💬 Atendimento direto no WhatsApp</span>
+    <button id="mobileMenuBtn" class="mobile-menu-btn" type="button" aria-label="Abrir menu">☰</button>
+
+    <aside id="sidebar" class="sidebar" aria-label="Menu principal">
+      <div class="sidebar__brand">
+        <h1>VF SHOES</h1>
+        <p>A melhor loja de tênis</p>
       </div>
 
-      <nav class="topbar" aria-label="Barra principal">
-        <strong class="brand">VF SHOES</strong>
-        <div class="topbar__actions">
-          <button id="openWishlist" class="ghost" type="button">Favoritos <span id="favCount">0</span></button>
-          <button id="openCart" class="cart-button" type="button">Carrinho <span id="cartCount" class="cart-count">0</span></button>
-        </div>
+      <nav>
+        <a href="#home">Home</a>
+        <a href="#catalogo">Catálogo</a>
+        <a href="#filtros">Filtro / Busca</a>
+        <a href="#precos">Tabela de preços</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#depoimentos">Depoimentos</a>
+        <a href="#entrega">Entrega</a>
+        <a href="#contato">Contato</a>
       </nav>
 
-      <div class="hero__content">
-        <p class="tag">CATÁLOGO ANIMADO + VIBE PREMIUM</p>
-        <h1>Seu próximo tênis top está na <span>VF SHOES</span>.</h1>
-        <p>
-          Visual bonito, com várias imagens por produto, filtros rápidos, favoritos, carrinho e envio automático para WhatsApp com modelo, tamanho e preço.
-        </p>
-        <div class="hero__cta">
-          <button id="goProducts" class="cta" type="button">Ver mais vendidos</button>
-          <button id="goCollections" class="ghost" type="button">Nossas coleções</button>
-        </div>
+      <div class="sidebar__actions">
+        <button id="themeToggle" class="ghost" type="button">Alternar tema</button>
+        <button id="openCart" class="ghost" type="button">Carrinho <span id="cartCount">0</span></button>
       </div>
-    </header>
+    </aside>
 
-    <main>
-      <section class="banner-grid" aria-label="Banners promocionais">
-        <article class="banner banner--large reveal">
-          <h2>Mais vendidos da semana</h2>
-          <p>Modelos premium com visual urbano e esportivo.</p>
-        </article>
-        <article class="banner reveal">
-          <h3>Running</h3>
-          <p>Leveza e velocidade.</p>
-        </article>
-        <article class="banner reveal">
-          <h3>Lifestyle</h3>
-          <p>Estilo no dia a dia.</p>
-        </article>
-      </section>
-
-      <section id="productsSection" class="section-title">
-        <h2>Mais vendidos</h2>
-        <p>Explore com busca, categoria e ordenação.</p>
-      </section>
-
-      <section class="controls" aria-label="Filtros de catálogo">
-        <label>
-          Buscar modelo
-          <input id="searchInput" type="search" placeholder="Ex: Flow, Speed, Neon..." maxlength="40" />
-        </label>
-        <label>
-          Categoria
-          <select id="categoryFilter">
-            <option value="all">Todas</option>
-          </select>
-        </label>
-        <label>
-          Ordenar por
-          <select id="sortFilter">
-            <option value="featured">Destaque</option>
-            <option value="low">Menor preço</option>
-            <option value="high">Maior preço</option>
-            <option value="name">Nome A-Z</option>
-          </select>
-        </label>
-      </section>
-
-      <section id="products" class="products" aria-label="Lista de produtos"></section>
-
-      <section id="collectionsSection" class="collections reveal" aria-label="Nossas coleções">
-        <div class="collections__head">
-          <h2>Nossas coleções</h2>
-          <div>
-            <button id="prevCollection" class="ghost" type="button">◀</button>
-            <button id="nextCollection" class="ghost" type="button">▶</button>
+    <main class="main">
+      <section id="home" class="hero parallax">
+        <video class="hero__video" autoplay muted loop playsinline>
+          <source
+            src="https://cdn.coverr.co/videos/coverr-running-shoes-in-the-gym-1579/1080p.mp4"
+            type="video/mp4"
+          />
+        </video>
+        <div class="hero__overlay"></div>
+        <div class="hero__content reveal">
+          <p class="tag">Vitrine digital + atendimento humano</p>
+          <h2>Escolha seu tênis e feche direto no WhatsApp.</h2>
+          <p>
+            Navegue pelos modelos, selecione a numeração e veja detalhes completos antes da compra.
+            <strong>Este site não realiza pagamento online.</strong>
+          </p>
+          <div class="hero__buttons">
+            <a class="cta" href="#catalogo">Ver Catálogo</a>
+            <a class="ghost" href="https://wa.me/5511999999999" target="_blank" rel="noopener noreferrer">Falar no WhatsApp</a>
+          </div>
+          <div class="stats" id="stats">
+            <article><strong data-target="350">0</strong><span>Clientes atendidos</span></article>
+            <article><strong data-target="120">0</strong><span>Modelos ativos</span></article>
+            <article><strong data-target="98">0</strong><span>% satisfação</span></article>
           </div>
         </div>
-        <div id="collectionTrack" class="collection-track"></div>
       </section>
 
-      <section class="about reveal">
-        <h2>Conheça mais da VF SHOES</h2>
-        <p>
-          Loja especializada em tênis premium, com atendimento humano e foco total em estilo, conforto e qualidade.
-        </p>
+      <section id="catalogo" class="section reveal">
+        <header class="section__head">
+          <h3>👟 Catálogo de Tênis</h3>
+          <p>Selecione modelo e numeração e clique em “Comprar pelo WhatsApp”.</p>
+        </header>
+
+        <div id="products" class="product-grid"></div>
       </section>
-    </main>
 
-    <aside id="cartPanel" class="side-panel" aria-label="Carrinho de interesse" aria-hidden="true">
-      <div class="panel__header">
-        <h3>Seu carrinho</h3>
-        <button id="closeCart" type="button" class="ghost">Fechar</button>
-      </div>
-      <div id="cartItems" class="panel__items"></div>
-      <div class="panel__footer">
-        <p id="cartTotal">Total: R$ 0,00</p>
-        <button id="sendWhats" type="button" class="cta">Enviar carrinho no WhatsApp</button>
-      </div>
-    </aside>
+      <section id="filtros" class="section reveal">
+        <header class="section__head">
+          <h3>🔍 Filtro / Busca</h3>
+          <p>Encontre mais rápido por marca, modelo ou tamanho.</p>
+        </header>
 
-    <aside id="wishlistPanel" class="side-panel" aria-label="Favoritos" aria-hidden="true">
-      <div class="panel__header">
-        <h3>Favoritos</h3>
-        <button id="closeWishlist" type="button" class="ghost">Fechar</button>
-      </div>
-      <div id="wishlistItems" class="panel__items"></div>
-    </aside>
-
-    <dialog id="quickView" class="quickview">
-      <article class="quickview__content">
-        <button id="closeQuickView" type="button" class="ghost quickview__close">X</button>
-        <img id="quickImg" alt="" />
-        <div>
-          <h3 id="quickName"></h3>
-          <p id="quickPrice"></p>
-          <p id="quickDescription"></p>
-          <div id="quickThumbs" class="quick-thumbs"></div>
-        </div>
-      </article>
-    </dialog>
-
-    <template id="productTemplate">
-      <article class="card reveal">
-        <div class="card__media">
-          <img class="card__image" alt="" loading="lazy" />
-          <button class="wish" type="button" aria-label="Favoritar">♡</button>
-          <span class="badge-discount"></span>
-        </div>
-        <div class="card__thumbs"></div>
-        <div class="card__body">
-          <small class="card__category"></small>
-          <h3 class="card__name"></h3>
-          <p class="card__price"></p>
+        <div class="filters">
+          <label>
+            Buscar modelo
+            <input id="searchInput" type="search" placeholder="Ex: Runner, Street..." maxlength="40" />
+          </label>
+          <label>
+            Marca
+            <select id="brandFilter">
+              <option value="all">Todas</option>
+            </select>
+          </label>
           <label>
             Tamanho
-            <select class="card__size"></select>
+            <select id="sizeFilter">
+              <option value="all">Todos</option>
+            </select>
           </label>
-          <div class="card__actions">
-            <button class="cta add" type="button">Adicionar</button>
-            <button class="ghost details" type="button">Detalhes</button>
+        </div>
+      </section>
+
+      <section id="precos" class="section reveal">
+        <header class="section__head">
+          <h3>💲 Tabela de preços</h3>
+          <p>Faixas para ajudar na decisão rápida.</p>
+        </header>
+        <div class="price-table-wrap">
+          <table class="price-table">
+            <thead>
+              <tr>
+                <th>Categoria</th>
+                <th>Faixa</th>
+                <th>Indicado para</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Lifestyle</td><td>R$ 399 - R$ 649</td><td>Dia a dia e estilo urbano</td></tr>
+              <tr><td>Running</td><td>R$ 599 - R$ 899</td><td>Corrida e treino</td></tr>
+              <tr><td>Premium</td><td>R$ 899+</td><td>Alta performance e coleção</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="sobre" class="section reveal">
+        <header class="section__head">
+          <h3>📦 Sobre a Loja</h3>
+        </header>
+        <div class="cards-2">
+          <article class="info-card">
+            <h4>Quem somos</h4>
+            <p>
+              A VF SHOES é uma loja especializada em tênis originais, focada em unir estilo, conforto e atendimento próximo.
+            </p>
+          </article>
+          <article class="info-card">
+            <h4>Confiança</h4>
+            <p>
+              📍 Localização: São Paulo - SP<br />
+              🕒 Tempo de mercado: 4 anos<br />
+              ✅ Atendimento consultivo e personalizado via WhatsApp.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="depoimentos" class="section reveal">
+        <header class="section__head">
+          <h3>⭐ Depoimentos</h3>
+          <p>Prova social para ajudar você a escolher com segurança.</p>
+        </header>
+        <div class="slider" id="testimonialSlider">
+          <article class="slide active">
+            <p>“Chegou rápido e exatamente como nas fotos. Atendimento top!”</p>
+            <small>— Ana, Guarulhos</small>
+          </article>
+          <article class="slide">
+            <p>“Consegui tirar dúvida de tamanho no Whats e fechamos na hora.”</p>
+            <small>— Marcos, Santo André</small>
+          </article>
+          <article class="slide">
+            <p>“Loja de confiança. Comprei 2 pares e já estou vendo o próximo.”</p>
+            <small>— Bruna, Osasco</small>
+          </article>
+          <div class="slider__controls">
+            <button id="prevSlide" class="ghost" type="button">◀</button>
+            <button id="nextSlide" class="ghost" type="button">▶</button>
           </div>
-          <button class="ghost buy-whatsapp" type="button">Tenho interesse no WhatsApp</button>
         </div>
-      </article>
-    </template>
+      </section>
 
-    <template id="collectionTemplate">
-      <article class="collection-card">
-        <img class="collection-card__image" alt="" loading="lazy" />
+      <section id="entrega" class="section reveal">
+        <header class="section__head">
+          <h3>🚚 Entrega / Informações</h3>
+        </header>
+        <div class="cards-3">
+          <article class="info-card">
+            <h4>Entrega ou retirada</h4>
+            <p>Entregamos em todo Brasil e também oferecemos retirada em loja.</p>
+          </article>
+          <article class="info-card">
+            <h4>Pagamento</h4>
+            <p>Pix, cartão de crédito e débito. Condições combinadas no atendimento.</p>
+          </article>
+          <article class="info-card">
+            <h4>Prazo médio</h4>
+            <p>Postagem em até 24h úteis após confirmação.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="contato" class="section reveal">
+        <header class="section__head">
+          <h3>💬 Contato / WhatsApp</h3>
+        </header>
+        <div class="contact-box">
+          <p>Fale com a gente e garanta seu tênis com atendimento rápido e personalizado.</p>
+          <a class="cta big" href="https://wa.me/5511999999999" target="_blank" rel="noopener noreferrer">
+            Chamar no WhatsApp: (11) 99999-9999
+          </a>
+        </div>
+      </section>
+
+      <section class="section reveal">
+        <header class="section__head">
+          <h3>📬 Newsletter</h3>
+        </header>
+        <form class="newsletter" id="newsletterForm">
+          <input id="newsletterEmail" type="email" maxlength="100" placeholder="Seu melhor e-mail" required />
+          <button class="cta" type="submit">Inscrever-se</button>
+        </form>
+      </section>
+
+      <footer class="footer">
         <div>
-          <h3 class="collection-card__title"></h3>
-          <p class="collection-card__desc"></p>
+          <h4>VF SHOES</h4>
+          <p>A melhor loja de tênis. Vitrine digital com foco em confiança e conversão.</p>
+        </div>
+        <div>
+          <h4>Links rápidos</h4>
+          <a href="#catalogo">Catálogo</a>
+          <a href="#sobre">Sobre</a>
+          <a href="#contato">Contato</a>
+        </div>
+        <div>
+          <h4>Contato</h4>
+          <p>São Paulo - SP</p>
+          <p>(11) 99999-9999</p>
+          <p>contato@vfshoes.com.br</p>
+        </div>
+        <div>
+          <h4>Social</h4>
+          <div class="socials">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a>
+            <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer">TikTok</a>
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <aside id="cartPanel" class="cart-panel" aria-hidden="true">
+      <div class="cart-panel__head">
+        <h4>Carrinho de interesse</h4>
+        <button id="closeCart" class="ghost" type="button">Fechar</button>
+      </div>
+      <div id="cartItems" class="cart-panel__items"></div>
+      <div class="cart-panel__footer">
+        <p id="cartTotal">Total estimado: R$ 0,00</p>
+        <button id="sendCartWhats" class="cta" type="button">Enviar carrinho no WhatsApp</button>
+      </div>
+    </aside>
+
+    <button id="backToTop" class="back-top" type="button" aria-label="Voltar ao topo">↑</button>
+
+    <template id="productTemplate">
+      <article class="product-card reveal">
+        <img class="product-image" alt="" loading="lazy" />
+        <div class="product-card__content">
+          <small class="product-brand"></small>
+          <h4 class="product-name"></h4>
+          <p class="product-price"></p>
+          <label>
+            Numeração
+            <select class="product-size"></select>
+          </label>
+          <div class="product-card__actions">
+            <button class="ghost add-cart" type="button">Adicionar ao carrinho</button>
+            <button class="cta buy-wa" type="button">Comprar pelo WhatsApp</button>
+          </div>
         </div>
       </article>
     </template>
-
-    <footer class="footer">
-      <div>
-        <strong>VF SHOES</strong>
-        <p>Atendimento Seg à Sáb — 09h às 19h</p>
-      </div>
-      <div>
-        <p>Políticas</p>
-        <small>Trocas e devoluções • Privacidade • Entregas</small>
-      </div>
-      <div>
-        <input type="email" placeholder="Seu e-mail" maxlength="100" aria-label="Seu e-mail" />
-        <button class="cta" type="button">Inscrever-se</button>
-      </div>
-    </footer>
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
