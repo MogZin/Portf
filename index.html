@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none';"
+    />
+    <meta name="description" content="VF SHOES - Catálogo premium de tênis com visual moderno, tamanhos, carrinho e contato via WhatsApp." />
+    <title>VF SHOES | Catálogo Premium</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="loader" class="loader" aria-live="polite" aria-label="Carregando site VF SHOES">
+      <div class="loader__logo">VF SHOES</div>
+      <div class="loader__bar"><span></span></div>
+      <small>Preparando experiência premium...</small>
+    </div>
+
+    <header class="hero">
+      <nav class="topbar" aria-label="Barra principal">
+        <strong class="brand">VF SHOES</strong>
+        <div class="topbar__actions">
+          <button id="openWishlist" class="ghost" type="button">Favoritos <span id="favCount">0</span></button>
+          <button id="openCart" class="cart-button" type="button" aria-label="Abrir carrinho">
+            Carrinho <span id="cartCount" class="cart-count">0</span>
+          </button>
+        </div>
+      </nav>
+
+      <div class="hero__content">
+        <p class="tag">LOJA FÍSICA + CATÁLOGO DIGITAL</p>
+        <h1>Seu estilo começa na <span>VF SHOES</span>.</h1>
+        <p>
+          Catálogo visual inspirado em loja premium: escolha modelo e tamanho, salve favoritos, monte carrinho de interesse e envie tudo para o WhatsApp.
+        </p>
+        <div class="hero__badges">
+          <div><strong>+150</strong><span>modelos</span></div>
+          <div><strong>Envio rápido</strong><span>atendimento</span></div>
+          <div><strong>100%</strong><span>experiência segura</span></div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="section-title">
+        <h2>Modelos em destaque</h2>
+        <p>Filtre por categoria e encontre o tênis ideal.</p>
+      </section>
+
+      <section class="controls" aria-label="Filtros de catálogo">
+        <label>
+          Buscar modelo
+          <input id="searchInput" type="search" placeholder="Ex: Air, Court, Running..." maxlength="40" />
+        </label>
+
+        <label>
+          Categoria
+          <select id="categoryFilter">
+            <option value="all">Todas</option>
+          </select>
+        </label>
+
+        <label>
+          Ordenar por
+          <select id="sortFilter">
+            <option value="featured">Destaque</option>
+            <option value="low">Menor preço</option>
+            <option value="high">Maior preço</option>
+            <option value="name">Nome A-Z</option>
+          </select>
+        </label>
+      </section>
+
+      <section id="products" class="products" aria-label="Lista de produtos"></section>
+    </main>
+
+    <aside id="cartPanel" class="side-panel" aria-label="Carrinho de interesse" aria-hidden="true">
+      <div class="panel__header">
+        <h3>Seu carrinho</h3>
+        <button id="closeCart" type="button" class="ghost">Fechar</button>
+      </div>
+      <div id="cartItems" class="panel__items"></div>
+      <div class="panel__footer">
+        <p id="cartTotal">Total: R$ 0,00</p>
+        <button id="sendWhats" type="button" class="cta">Enviar carrinho no WhatsApp</button>
+      </div>
+    </aside>
+
+    <aside id="wishlistPanel" class="side-panel" aria-label="Favoritos" aria-hidden="true">
+      <div class="panel__header">
+        <h3>Favoritos</h3>
+        <button id="closeWishlist" type="button" class="ghost">Fechar</button>
+      </div>
+      <div id="wishlistItems" class="panel__items"></div>
+    </aside>
+
+    <dialog id="quickView" class="quickview">
+      <article class="quickview__content">
+        <button id="closeQuickView" type="button" class="ghost quickview__close">X</button>
+        <img id="quickImg" alt="" />
+        <div>
+          <h3 id="quickName"></h3>
+          <p id="quickPrice"></p>
+          <p id="quickDescription"></p>
+        </div>
+      </article>
+    </dialog>
+
+    <template id="productTemplate">
+      <article class="card">
+        <div class="card__media">
+          <img class="card__image" alt="" loading="lazy" />
+          <button class="wish" type="button" aria-label="Favoritar">♡</button>
+        </div>
+        <div class="card__body">
+          <small class="card__category"></small>
+          <h3 class="card__name"></h3>
+          <p class="card__price"></p>
+          <label>
+            Tamanho
+            <select class="card__size"></select>
+          </label>
+          <div class="card__actions">
+            <button class="cta add" type="button">Adicionar</button>
+            <button class="ghost details" type="button">Detalhes</button>
+          </div>
+          <button class="ghost buy-whatsapp" type="button">Tenho interesse no WhatsApp</button>
+        </div>
+      </article>
+    </template>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>
