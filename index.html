@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VF SHOES — Tênis de Alto Estilo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black: #0a0a0a;
+      --white: #f2f2f2;
+      --accent: #cfcfcf;
+      --gray: #1b1b1b;
+      --mid: #2b2b2b;
+      --light: #a2a2a2;
+      --card-bg: #121212;
+      --shadow: rgba(255, 255, 255, 0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Barlow', sans-serif;
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(var(--white), var(--light));
+      border-radius: 10px;
+    }
+
+    nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(10, 10, 10, 0.82);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.35s ease;
+    }
+
+    nav.scrolled {
+      padding: 12px 36px;
+      background: rgba(10, 10, 10, 0.94);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      letter-spacing: 4px;
+      color: var(--white);
+    }
+
+    .nav-logo span {
+      color: var(--accent);
+      text-shadow: 0 0 12px rgba(255, 255, 255, 0.25);
+    }
+
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+
+    .nav-links a {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--light);
+      text-decoration: none;
+      position: relative;
+      transition: color 0.25s;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -6px;
+      height: 1px;
+      background: var(--white);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.25s;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .nav-cart {
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: linear-gradient(135deg, #3b3b3b, #1f1f1f);
+      color: var(--white);
+      padding: 10px 22px;
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .nav-cart:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: var(--white);
+      color: var(--black);
+      font-size: 0.65rem;
+      font-weight: 900;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cart-count.visible { display: flex; }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 50% 60% at 75% 52%, rgba(255, 255, 255, 0.1), transparent 70%),
+        linear-gradient(135deg, #090909 0%, #181818 55%, #111111 100%);
+      animation: pulseBg 9s ease-in-out infinite;
+    }
+
+    @keyframes pulseBg {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.12); }
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      opacity: 0.05;
+      background-image:
+        linear-gradient(var(--white) 1px, transparent 1px),
+        linear-gradient(90deg, var(--white) 1px, transparent 1px);
+      background-size: 58px 58px;
+      animation: driftGrid 18s linear infinite;
+    }
+
+    @keyframes driftGrid {
+      from { transform: translateY(0); }
+      to { transform: translateY(58px); }
+    }
+
+    .hero-content { position: relative; z-index: 2; max-width: 650px; }
+
+    .hero-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4.8rem, 10vw, 8.8rem);
+      line-height: 0.9;
+      margin-bottom: 24px;
+      display: inline-block;
+    }
+
+    .scroll-letter {
+      display: inline-block;
+      color: var(--white);
+      transition: color 0.25s linear, transform 0.25s ease;
+      will-change: transform, color;
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: var(--light);
+      line-height: 1.6;
+      margin-bottom: 40px;
+      max-width: 480px;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      background: linear-gradient(135deg, #f3f3f3, #bdbdbd);
+      color: #101010;
+      padding: 16px 40px;
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      border: 0;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+
+    .hero-cta:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+    }
+
+    .hero-shoe-img {
+      position: absolute;
+      right: 3%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: min(52vw, 700px);
+      opacity: 0.2;
+      pointer-events: none;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(14rem, 26vw, 24rem);
+      color: var(--white);
+      letter-spacing: -4px;
+      user-select: none;
+      animation: floatShoe 4s ease-in-out infinite;
+    }
+
+    @keyframes floatShoe {
+      0%, 100% { transform: translateY(-50%) translateX(0); }
+      50% { transform: translateY(-52%) translateX(8px); }
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--light);
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+    }
+
+    .hero-scroll-line {
+      width: 1px;
+      height: 50px;
+      background: linear-gradient(var(--white), transparent);
+      animation: scrollAnim 1.5s ease-in-out infinite;
+    }
+
+    @keyframes scrollAnim {
+      0%,100% { opacity:1; transform:scaleY(1); }
+      50% { opacity:0.3; transform:scaleY(0.5); }
+    }
+
+    .section { padding: 96px 48px; }
+    .section-header { margin-bottom: 64px; }
+    .section-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      line-height: 1;
+      color: var(--white);
+    }
+
+    .filter-bar { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 48px; }
+
+    .filter-btn {
+      padding: 8px 20px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: transparent;
+      color: var(--light);
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      border-color: var(--white);
+      color: var(--white);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2px;
+    }
+
+    .product-card {
+      background: var(--card-bg);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(25px);
+    }
+
+    .product-card.revealed {
+      opacity: 1;
+      transform: translateY(0);
+      transition: transform 0.45s ease, opacity 0.45s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      z-index: 2;
+      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.35);
+    }
+
+    .product-card:hover .product-img-wrap::after { opacity: 1; }
+
+    .product-img-wrap {
+      aspect-ratio: 4/3;
+      background: var(--gray);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .product-img-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.13), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .product-emoji {
+      font-size: 5rem;
+      filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.8));
+      transition: transform 0.4s ease;
+      user-select: none;
+    }
+
+    .product-card:hover .product-emoji { transform: scale(1.08) rotate(-4deg); }
+
+    .product-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: var(--white);
+      color: #111;
+      font-size: 0.62rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      padding: 4px 10px;
+      text-transform: uppercase;
+    }
+
+    .product-info { padding: 24px; }
+    .product-brand {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .product-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+      line-height: 1.1;
+    }
+
+    .product-price { font-size: 1.1rem; font-weight: 900; margin-bottom: 16px; }
+    .product-sizes { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+
+    .size-tag {
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--light);
+    }
+
+    .product-actions { display: flex; gap: 8px; }
+    .btn-details, .btn-cart {
+      flex: 1;
+      padding: 11px;
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+
+    .btn-details {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--light);
+    }
+
+    .btn-details:hover {
+      border-color: var(--white);
+      color: var(--white);
+    }
+
+    .btn-cart {
+      background: linear-gradient(135deg, #f0f0f0, #b7b7b7);
+      color: #111;
+    }
+
+    .btn-cart:hover { transform: translateY(-1px); }
+
+    .banner {
+      margin: 0 48px;
+      background: linear-gradient(135deg, #f3f3f3 0%, #8e8e8e 100%);
+      color: #111;
+      padding: 48px 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .banner-text h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.8rem;
+      margin-bottom: 8px;
+    }
+
+    .banner-link {
+      background: #111;
+      color: #fff;
+      padding: 14px 32px;
+      font-weight: 800;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .banner-link:hover {
+      background: #fff;
+      color: #111;
+    }
+
+    footer {
+      margin-top: 96px;
+      background: var(--gray);
+      padding: 64px 48px 32px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      letter-spacing: 4px;
+      margin-bottom: 16px;
+    }
+
+    .footer-logo span { color: var(--accent); }
+    .footer-desc { font-size: 0.85rem; color: var(--light); line-height: 1.7; max-width: 280px; }
+
+    .footer-col h4 {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 10px; }
+    .footer-col a { font-size: 0.85rem; color: var(--light); text-decoration: none; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--white); }
+
+    .footer-bottom {
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--light);
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 999;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #fff;
+      color: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
+      transition: all 0.25s;
+    }
+
+    .whatsapp-float:hover { transform: scale(1.12); }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .hero { padding: 0 20px; }
+      .hero-title { font-size: 4.1rem; }
+      .hero-shoe-img { display: none; }
+      .section { padding: 64px 20px; }
+      .banner { margin: 0 20px; flex-direction: column; text-align: center; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-tag { animation: fadeUp 0.6s 0.1s both; }
+    .hero-title { animation: fadeUp 0.6s 0.25s both; }
+    .hero-sub { animation: fadeUp 0.6s 0.4s both; }
+    .hero-cta { animation: fadeUp 0.6s 0.55s both; }
+  </style>
+</head>
+<body>
+  <nav id="navbar">
+    <div class="nav-logo">VF <span>SHOES</span></div>
+    <ul class="nav-links">
+      <li><a href="#produtos">Produtos</a></li>
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+    <button class="nav-cart">
+      🛒 Carrinho
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <span class="hero-tag">✦ Nova Coleção 2026</span>
+      <h1 class="hero-title" id="heroTitle">PASSO<br>A FRENTE</h1>
+      <p class="hero-sub">Visual premium em tons de preto, branco e cinza. Um catálogo moderno, elegante e muito mais animado.</p>
+      <button class="hero-cta" onclick="document.getElementById('produtos').scrollIntoView({behavior:'smooth'})">Ver Coleção →</button>
+    </div>
+    <div class="hero-shoe-img">👟</div>
+    <div class="hero-scroll">
+      <div class="hero-scroll-line"></div>
+      <span>SCROLL</span>
+    </div>
+  </section>
+
+  <section class="section" id="produtos">
+    <div class="section-header">
+      <div class="section-tag">✦ Catálogo</div>
+      <h2 class="section-title">NOSSOS MODELOS</h2>
+    </div>
+
+    <div class="filter-bar" id="filterBar">
+      <button class="filter-btn active" data-cat="all">Todos</button>
+      <button class="filter-btn" data-cat="Nike">Nike</button>
+      <button class="filter-btn" data-cat="Adidas">Adidas</button>
+      <button class="filter-btn" data-cat="New Balance">New Balance</button>
+      <button class="filter-btn" data-cat="Puma">Puma</button>
+      <button class="filter-btn" data-cat="Vans">Vans</button>
+    </div>
+
+    <div class="products-grid" id="productsGrid"></div>
+  </section>
+
+  <div class="banner">
+    <div class="banner-text">
+      <h2>MINIMALISTA, BONITO E DAHORA</h2>
+      <p>Layout atualizado com animações, contraste forte e tipografia dinâmica.</p>
+    </div>
+    <a href="#produtos" class="banner-link">Ver Produtos</a>
+  </div>
+
+  <footer id="sobre">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">VF <span>SHOES</span></div>
+        <p class="footer-desc">Sua loja de tênis com estilo urbano, foco em experiência premium e finalização rápida.</p>
+      </div>
+      <div class="footer-col" id="contato">
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="#">📍 Sua cidade, Brasil</a></li>
+          <li><a href="#">📱 WhatsApp</a></li>
+          <li><a href="#">📸 Instagram</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Marcas</h4>
+        <ul>
+          <li><a href="#">Nike</a></li>
+          <li><a href="#">Adidas</a></li>
+          <li><a href="#">New Balance</a></li>
+          <li><a href="#">Puma</a></li>
+          <li><a href="#">Vans</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Loja</h4>
+        <ul>
+          <li><a href="#">Novidades</a></li>
+          <li><a href="#">Promoções</a></li>
+          <li><a href="#">Trocas & Devoluções</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 VF SHOES. Todos os direitos reservados.</span>
+      <span>Feito com ❤️ para você</span>
+    </div>
+  </footer>
+
+  <a class="whatsapp-float" href="#" title="Fale conosco">💬</a>
+
+  <script>
+    const products = [
+      { id: 1, brand: 'Nike', name: 'Air Max 270', price: 649.90, emoji: '👟', badge: 'MAIS VENDIDO', category: 'Nike', sizes: [37, 38, 39, 40, 41, 42] },
+      { id: 2, brand: 'Adidas', name: 'Ultraboost 22', price: 799.90, emoji: '🥿', badge: 'LANÇAMENTO', category: 'Adidas', sizes: [38, 39, 40, 41, 42, 43] },
+      { id: 3, brand: 'New Balance', name: '574 Classic', price: 459.90, emoji: '👞', badge: null, category: 'New Balance', sizes: [37, 38, 39, 40, 41, 42, 43] },
+      { id: 4, brand: 'Puma', name: 'RS-X Efekt', price: 529.90, emoji: '🩴', badge: 'NOVO', category: 'Puma', sizes: [38, 39, 40, 41, 42] },
+      { id: 5, brand: 'Vans', name: 'Old Skool Pro', price: 389.90, emoji: '👟', badge: null, category: 'Vans', sizes: [37, 38, 39, 40, 41, 42] }
+    ];
+
+    function renderProducts(cat = 'all') {
+      const grid = document.getElementById('productsGrid');
+      const filtered = cat === 'all' ? products : products.filter((p) => p.category === cat);
+      grid.innerHTML = filtered.map((p) => `
+        <div class="product-card reveal-item" data-id="${p.id}">
+          <div class="product-img-wrap">
+            <div class="product-emoji">${p.emoji}</div>
+            ${p.badge ? `<div class="product-badge">${p.badge}</div>` : ''}
+          </div>
+          <div class="product-info">
+            <div class="product-brand">${p.brand}</div>
+            <div class="product-name">${p.name}</div>
+            <div class="product-price">R$ ${p.price.toFixed(2).replace('.', ',')}</div>
+            <div class="product-sizes">${p.sizes.map((s) => `<span class="size-tag">${s}</span>`).join('')}</div>
+            <div class="product-actions">
+              <button class="btn-details">Ver Detalhes</button>
+              <button class="btn-cart">+ Carrinho</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      revealOnScroll();
+    }
+
+    document.getElementById('filterBar').addEventListener('click', (e) => {
+      const btn = e.target.closest('.filter-btn');
+      if (!btn) return;
+      document.querySelectorAll('.filter-btn').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderProducts(btn.dataset.cat);
+    });
+
+    function prepareHeroLetters() {
+      const hero = document.getElementById('heroTitle');
+      const raw = hero.innerHTML;
+      const plain = raw.replace('<br>', '\n');
+      const wrapped = plain.split('').map((char) => {
+        if (char === '\n') return '<br>';
+        if (char === ' ') return '<span class="scroll-letter">&nbsp;</span>';
+        return `<span class="scroll-letter">${char}</span>`;
+      }).join('');
+      hero.innerHTML = wrapped;
+    }
+
+    function animateHeroByScroll() {
+      const letters = document.querySelectorAll('.scroll-letter');
+      const max = Math.max(document.body.scrollHeight - window.innerHeight, 1);
+      const progress = Math.min(window.scrollY / max, 1);
+
+      letters.forEach((letter, idx) => {
+        const offset = (idx % 8) * 0.08;
+        const local = Math.max(0, Math.min(1, progress + offset));
+        const tone = Math.round(255 - local * 125);
+        letter.style.color = `rgb(${tone}, ${tone}, ${tone})`;
+        letter.style.transform = `translateY(${Math.sin((progress * 7) + idx * 0.6) * 2}px)`;
+      });
+    }
+
+    function revealOnScroll() {
+      const cards = document.querySelectorAll('.reveal-item');
+      cards.forEach((el, idx) => {
+        const top = el.getBoundingClientRect().top;
+        const visible = top < window.innerHeight - 80;
+        if (visible) {
+          setTimeout(() => el.classList.add('revealed'), idx * 55);
+        }
+      });
+    }
+
+    function handleScroll() {
+      const nav = document.getElementById('navbar');
+      nav.classList.toggle('scrolled', window.scrollY > 18);
+      animateHeroByScroll();
+      revealOnScroll();
+    }
+
+    prepareHeroLetters();
+    renderProducts();
+    animateHeroByScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+  </script>
+</body>
+</html>
