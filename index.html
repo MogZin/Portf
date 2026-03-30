@@ -3,769 +3,792 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VF SHOES — Tênis de Alto Estilo</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet" />
+  <meta name="description" content="VF SHOES - Loja de tênis com catálogo premium, carrinho e finalização rápida via WhatsApp." />
+  <title>VF SHOES | Catálogo Premium de Tênis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SportingGoodsStore",
+    "name": "VF SHOES",
+    "url": "https://vfshoes.com.br",
+    "description": "Catálogo premium de tênis com atendimento via WhatsApp.",
+    "sameAs": [
+      "https://instagram.com/vfshoes"
+    ],
+    "telephone": "+55 67 99678-1235"
+  }
+  </script>
+
+  <!-- Google Analytics (placeholder) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);} // eslint-disable-line
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+
+  <!-- Meta Pixel (placeholder) -->
+  <script>
+    !(function(f,b,e,v,n,t,s){
+      if(f.fbq)return;n=f.fbq=function(){n.callMethod? n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];
+      t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)
+    })(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '000000000000000');
+    fbq('track', 'PageView');
+  </script>
+
   <style>
     :root {
       --black: #0a0a0a;
-      --white: #f2f2f2;
-      --accent: #cfcfcf;
-      --gray: #1b1b1b;
-      --mid: #2b2b2b;
-      --light: #a2a2a2;
-      --card-bg: #121212;
-      --shadow: rgba(255, 255, 255, 0.08);
+      --white: #f4f4f4;
+      --light: #b9b9b9;
+      --gray-1: #1a1a1a;
+      --gray-2: #252525;
+      --gray-3: #343434;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --shadow: 0 10px 28px rgba(0,0,0,.35);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
+    body { font-family: 'Barlow', sans-serif; background: var(--black); color: var(--white); overflow-x: hidden; }
+    img { max-width: 100%; display: block; }
 
-    body {
-      background: var(--black);
-      color: var(--white);
-      font-family: 'Barlow', sans-serif;
-      overflow-x: hidden;
+    .container { width: min(1240px, 92%); margin: 0 auto; }
+
+    header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(10,10,10,.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,.07);
     }
 
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--black); }
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(var(--white), var(--light));
-      border-radius: 10px;
-    }
-
-    nav {
-      position: fixed;
-      inset: 0 0 auto 0;
-      z-index: 1000;
-      display: flex;
+    .topbar {
+      display: grid;
+      grid-template-columns: auto 1fr auto auto;
+      gap: 16px;
       align-items: center;
-      justify-content: space-between;
-      padding: 18px 48px;
-      background: rgba(10, 10, 10, 0.82);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      transition: all 0.35s ease;
+      padding: 14px 0;
     }
 
-    nav.scrolled {
-      padding: 12px 36px;
-      background: rgba(10, 10, 10, 0.94);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    .logo { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 3px; }
+    .logo span { color: var(--light); }
+
+    .search-wrap { position: relative; }
+    .search-input {
+      width: 100%; padding: 12px 14px;
+      background: var(--gray-1); border: 1px solid rgba(255,255,255,.15);
+      color: var(--white); border-radius: 8px;
     }
 
-    .nav-logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2rem;
-      letter-spacing: 4px;
-      color: var(--white);
+    .suggestions {
+      position: absolute; top: 106%; left: 0; right: 0;
+      background: var(--gray-1); border: 1px solid rgba(255,255,255,.12);
+      border-radius: 8px; overflow: hidden; display: none;
+    }
+    .suggestions.show { display: block; }
+    .suggestions button {
+      width: 100%; text-align: left; border: 0;
+      background: transparent; color: var(--white);
+      padding: 10px 12px; cursor: pointer;
+    }
+    .suggestions button:hover { background: var(--gray-2); }
+
+    .head-btn {
+      border: 1px solid rgba(255,255,255,.2); background: var(--gray-2);
+      color: var(--white); padding: 11px 14px; cursor: pointer; border-radius: 8px;
+      font-weight: 700; letter-spacing: .5px;
     }
 
-    .nav-logo span {
-      color: var(--accent);
-      text-shadow: 0 0 12px rgba(255, 255, 255, 0.25);
-    }
-
-    .nav-links { display: flex; gap: 36px; list-style: none; }
-
-    .nav-links a {
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--light);
-      text-decoration: none;
-      position: relative;
-      transition: color 0.25s;
-    }
-
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: -6px;
-      height: 1px;
-      background: var(--white);
-      transform: scaleX(0);
-      transform-origin: right;
-      transition: transform 0.25s;
-    }
-
-    .nav-links a:hover { color: var(--white); }
-    .nav-links a:hover::after {
-      transform: scaleX(1);
-      transform-origin: left;
-    }
-
-    .nav-cart {
-      position: relative;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      background: linear-gradient(135deg, #3b3b3b, #1f1f1f);
-      color: var(--white);
-      padding: 10px 22px;
-      font-family: 'Barlow', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .nav-cart:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
-      border-color: rgba(255, 255, 255, 0.4);
-    }
-
+    .cart-btn { position: relative; }
     .cart-count {
-      position: absolute;
-      top: -8px;
-      right: -8px;
-      background: var(--white);
-      color: var(--black);
-      font-size: 0.65rem;
-      font-weight: 900;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      display: none;
-      align-items: center;
-      justify-content: center;
+      position: absolute; top: -8px; right: -8px; width: 20px; height: 20px;
+      border-radius: 50%; background: var(--white); color: var(--black);
+      font-size: .72rem; font-weight: 900; display: grid; place-items: center;
     }
 
-    .cart-count.visible { display: flex; }
+    nav ul { display: flex; list-style: none; gap: 18px; padding: 0 0 14px 0; }
+    nav a { color: var(--light); text-decoration: none; font-size: .85rem; text-transform: uppercase; letter-spacing: 1px; }
 
     .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding: 0 48px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-bg {
-      position: absolute;
-      inset: 0;
+      min-height: 82vh; display: grid; align-items: center;
       background:
-        radial-gradient(ellipse 50% 60% at 75% 52%, rgba(255, 255, 255, 0.1), transparent 70%),
-        linear-gradient(135deg, #090909 0%, #181818 55%, #111111 100%);
-      animation: pulseBg 9s ease-in-out infinite;
-    }
-
-    @keyframes pulseBg {
-      0%, 100% { filter: brightness(1); }
-      50% { filter: brightness(1.12); }
+        radial-gradient(circle at 80% 40%, rgba(255,255,255,.12), transparent 40%),
+        linear-gradient(135deg, #090909, #161616);
+      border-bottom: 1px solid rgba(255,255,255,.08);
     }
 
     .hero-grid {
-      position: absolute;
-      inset: 0;
-      opacity: 0.05;
-      background-image:
-        linear-gradient(var(--white) 1px, transparent 1px),
-        linear-gradient(90deg, var(--white) 1px, transparent 1px);
-      background-size: 58px 58px;
-      animation: driftGrid 18s linear infinite;
+      display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; align-items: center;
+      padding: 42px 0;
     }
 
-    @keyframes driftGrid {
-      from { transform: translateY(0); }
-      to { transform: translateY(58px); }
+    .hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3.5rem, 8vw, 7rem); line-height: .92; }
+    .hero h1 .letter { display: inline-block; transition: transform .2s ease, color .2s linear; }
+    .hero p { color: var(--light); font-size: 1.05rem; line-height: 1.6; margin: 16px 0 24px; max-width: 560px; }
+
+    .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      border: 1px solid rgba(255,255,255,.2); background: var(--gray-1); color: var(--white);
+      padding: 12px 18px; border-radius: 8px; cursor: pointer; font-weight: 700;
+    }
+    .btn.primary { background: linear-gradient(135deg, #f3f3f3, #c8c8c8); color: #111; border-color: transparent; }
+
+    .hero-media { border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,.09); box-shadow: var(--shadow); }
+    .hero-media video { width: 100%; height: 100%; min-height: 360px; object-fit: cover; background: #111; }
+
+    .section { padding: 64px 0; }
+    .section h2 { font-family: 'Bebas Neue', sans-serif; letter-spacing: 2px; font-size: 2.3rem; margin-bottom: 18px; }
+
+    .promo-banner {
+      background: linear-gradient(135deg, #efefef, #7c7c7c);
+      color: #111; border-radius: 14px; padding: 28px;
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
     }
 
-    .hero-content { position: relative; z-index: 2; max-width: 650px; }
-
-    .hero-tag {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 16px;
-      display: block;
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .card {
+      background: var(--gray-1); border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px; overflow: hidden;
     }
 
-    .hero-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(4.8rem, 10vw, 8.8rem);
-      line-height: 0.9;
-      margin-bottom: 24px;
-      display: inline-block;
+    .cat { padding: 18px; text-align: center; font-weight: 700; }
+    .cat small { color: var(--light); display: block; margin-top: 6px; }
+
+    .filters {
+      display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin-bottom: 18px;
+    }
+    .filters select, .filters input {
+      background: var(--gray-1); border: 1px solid rgba(255,255,255,.15); color: var(--white);
+      border-radius: 8px; padding: 10px;
     }
 
-    .scroll-letter {
-      display: inline-block;
-      color: var(--white);
-      transition: color 0.25s linear, transform 0.25s ease;
-      will-change: transform, color;
+    .products { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 12px; }
+
+    .product-img { aspect-ratio: 4 / 3; overflow: hidden; position: relative; background: var(--gray-2); }
+    .product-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+    .product-img:hover img { transform: scale(1.1); }
+    .badge { position: absolute; top: 10px; left: 10px; background: var(--white); color: #111; font-size: .7rem; padding: 5px 8px; border-radius: 999px; font-weight: 800; }
+
+    .angles { display: flex; gap: 8px; padding: 8px 12px 0; }
+    .angles button {
+      width: 34px; height: 34px; border-radius: 8px; border: 1px solid rgba(255,255,255,.15);
+      background: var(--gray-2); color: var(--white); cursor: pointer;
     }
 
-    .hero-sub {
-      font-size: 1.1rem;
-      font-weight: 300;
-      color: var(--light);
-      line-height: 1.6;
-      margin-bottom: 40px;
-      max-width: 480px;
+    .prod-body { padding: 12px; }
+    .brand { color: var(--light); font-size: .78rem; text-transform: uppercase; letter-spacing: .8px; }
+    .name { font-size: 1.15rem; font-weight: 800; margin: 4px 0; }
+    .stock { font-size: .8rem; }
+    .ok { color: var(--success); }
+    .low { color: #f59e0b; }
+
+    .price { font-size: 1.1rem; font-weight: 900; margin: 8px 0 4px; }
+    .installments { color: var(--light); font-size: .82rem; }
+
+    .size-list { display: flex; flex-wrap: wrap; gap: 7px; margin: 10px 0; }
+    .size-btn {
+      border: 1px solid rgba(255,255,255,.18); background: transparent; color: var(--white);
+      border-radius: 6px; width: 38px; height: 34px; cursor: pointer;
+    }
+    .size-btn.off { opacity: .35; text-decoration: line-through; cursor: not-allowed; }
+    .size-btn.active { background: var(--white); color: #111; }
+
+    .color-list { display: flex; gap: 8px; margin-bottom: 10px; }
+    .color-dot {
+      width: 20px; height: 20px; border-radius: 50%; border: 2px solid rgba(255,255,255,.55); cursor: pointer;
     }
 
-    .hero-cta {
-      display: inline-block;
-      background: linear-gradient(135deg, #f3f3f3, #bdbdbd);
-      color: #101010;
-      padding: 16px 40px;
-      font-weight: 800;
-      font-size: 0.85rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      border: 0;
-      cursor: pointer;
-      transition: all 0.25s;
-    }
+    .prod-actions { display: flex; gap: 8px; }
+    .prod-actions button { flex: 1; }
 
-    .hero-cta:hover {
-      transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
-    }
+    .wishlist.active { border-color: transparent; background: #f43f5e; }
 
-    .hero-shoe-img {
-      position: absolute;
-      right: 3%;
-      top: 50%;
-      transform: translateY(-50%);
-      width: min(52vw, 700px);
-      opacity: 0.2;
-      pointer-events: none;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(14rem, 26vw, 24rem);
-      color: var(--white);
-      letter-spacing: -4px;
-      user-select: none;
-      animation: floatShoe 4s ease-in-out infinite;
-    }
+    .reviews { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .review { padding: 14px; }
+    .review p { color: var(--light); font-size: .92rem; line-height: 1.5; margin-top: 8px; }
 
-    @keyframes floatShoe {
-      0%, 100% { transform: translateY(-50%) translateX(0); }
-      50% { transform: translateY(-52%) translateX(8px); }
-    }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 
-    .hero-scroll {
-      position: absolute;
-      bottom: 36px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      color: var(--light);
-      font-size: 0.65rem;
-      letter-spacing: 3px;
-    }
+    .table-wrap { overflow: auto; }
+    table { width: 100%; border-collapse: collapse; background: var(--gray-1); border-radius: 12px; overflow: hidden; }
+    th, td { border: 1px solid rgba(255,255,255,.08); padding: 10px; text-align: center; }
+    th { background: var(--gray-2); }
 
-    .hero-scroll-line {
-      width: 1px;
-      height: 50px;
-      background: linear-gradient(var(--white), transparent);
-      animation: scrollAnim 1.5s ease-in-out infinite;
-    }
+    .brand-strip { display: flex; flex-wrap: wrap; gap: 8px; }
+    .brand-chip { background: var(--gray-1); border: 1px solid rgba(255,255,255,.1); padding: 10px 12px; border-radius: 999px; }
 
-    @keyframes scrollAnim {
-      0%,100% { opacity:1; transform:scaleY(1); }
-      50% { opacity:0.3; transform:scaleY(0.5); }
-    }
+    .seal-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .seal { text-align: center; padding: 16px; }
 
-    .section { padding: 96px 48px; }
-    .section-header { margin-bottom: 64px; }
-    .section-tag {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 12px;
-    }
+    .faq details { background: var(--gray-1); border: 1px solid rgba(255,255,255,.1); border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; }
 
-    .section-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
-      line-height: 1;
-      color: var(--white);
-    }
+    footer { border-top: 1px solid rgba(255,255,255,.08); padding: 40px 0; margin-top: 40px; }
+    .footer-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+    .footer-grid a { color: var(--light); text-decoration: none; display: block; margin-top: 6px; font-size: .9rem; }
 
-    .filter-bar { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 48px; }
-
-    .filter-btn {
-      padding: 8px 20px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      background: transparent;
-      color: var(--light);
-      font-family: 'Barlow', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .filter-btn:hover,
-    .filter-btn.active {
-      border-color: var(--white);
-      color: var(--white);
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 2px;
-    }
-
-    .product-card {
-      background: var(--card-bg);
-      cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      opacity: 0;
-      transform: translateY(25px);
-    }
-
-    .product-card.revealed {
-      opacity: 1;
-      transform: translateY(0);
-      transition: transform 0.45s ease, opacity 0.45s ease;
-    }
-
-    .product-card:hover {
-      transform: translateY(-5px);
-      z-index: 2;
-      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.35);
-    }
-
-    .product-card:hover .product-img-wrap::after { opacity: 1; }
-
-    .product-img-wrap {
-      aspect-ratio: 4/3;
-      background: var(--gray);
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .product-img-wrap::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.13), transparent);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-
-    .product-emoji {
-      font-size: 5rem;
-      filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.8));
-      transition: transform 0.4s ease;
-      user-select: none;
-    }
-
-    .product-card:hover .product-emoji { transform: scale(1.08) rotate(-4deg); }
-
-    .product-badge {
-      position: absolute;
-      top: 16px;
-      left: 16px;
-      background: var(--white);
-      color: #111;
-      font-size: 0.62rem;
-      font-weight: 900;
-      letter-spacing: 2px;
-      padding: 4px 10px;
-      text-transform: uppercase;
-    }
-
-    .product-info { padding: 24px; }
-    .product-brand {
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 6px;
-    }
-
-    .product-name {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--white);
-      margin-bottom: 8px;
-      line-height: 1.1;
-    }
-
-    .product-price { font-size: 1.1rem; font-weight: 900; margin-bottom: 16px; }
-    .product-sizes { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
-
-    .size-tag {
-      font-size: 0.68rem;
-      font-weight: 600;
-      padding: 4px 10px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: var(--light);
-    }
-
-    .product-actions { display: flex; gap: 8px; }
-    .btn-details, .btn-cart {
-      flex: 1;
-      padding: 11px;
-      font-family: 'Barlow', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      cursor: pointer;
-      border: none;
-      transition: all 0.2s;
-    }
-
-    .btn-details {
-      background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: var(--light);
-    }
-
-    .btn-details:hover {
-      border-color: var(--white);
-      color: var(--white);
-    }
-
-    .btn-cart {
-      background: linear-gradient(135deg, #f0f0f0, #b7b7b7);
-      color: #111;
-    }
-
-    .btn-cart:hover { transform: translateY(-1px); }
-
-    .banner {
-      margin: 0 48px;
-      background: linear-gradient(135deg, #f3f3f3 0%, #8e8e8e 100%);
-      color: #111;
-      padding: 48px 64px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .banner-text h2 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.8rem;
-      margin-bottom: 8px;
-    }
-
-    .banner-link {
-      background: #111;
-      color: #fff;
-      padding: 14px 32px;
-      font-weight: 800;
-      font-size: 0.8rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
+    .wa-float {
+      position: fixed; right: 18px; bottom: 18px;
+      width: 54px; height: 54px; border-radius: 50%;
+      display: grid; place-items: center;
       text-decoration: none;
-      transition: all 0.2s;
+      background: #25D366; color: #fff; font-size: 1.5rem;
+      box-shadow: var(--shadow); z-index: 60;
     }
 
-    .banner-link:hover {
-      background: #fff;
-      color: #111;
+    .cart-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,.65); opacity: 0; pointer-events: none;
+      transition: .25s; z-index: 80;
     }
+    .cart-overlay.open { opacity: 1; pointer-events: all; }
 
-    footer {
-      margin-top: 96px;
-      background: var(--gray);
-      padding: 64px 48px 32px;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    .cart {
+      position: absolute; right: 0; top: 0; height: 100%; width: min(460px, 100%);
+      background: var(--gray-1); border-left: 1px solid rgba(255,255,255,.1);
+      display: grid; grid-template-rows: auto 1fr auto;
+      transform: translateX(100%); transition: transform .3s ease;
     }
+    .cart-overlay.open .cart { transform: translateX(0); }
 
-    .footer-top {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 48px;
-      margin-bottom: 48px;
+    .cart-head, .cart-foot { padding: 16px; border-bottom: 1px solid rgba(255,255,255,.08); }
+    .cart-foot { border-bottom: 0; border-top: 1px solid rgba(255,255,255,.08); }
+    .cart-items { padding: 12px 16px; overflow: auto; }
+    .item { display: grid; grid-template-columns: 56px 1fr auto; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .item img { width: 56px; height: 56px; object-fit: cover; border-radius: 8px; }
+
+    .field { margin-top: 9px; display: grid; gap: 6px; }
+    .field input { width: 100%; padding: 10px; background: var(--gray-2); border: 1px solid rgba(255,255,255,.12); color: var(--white); border-radius: 8px; }
+
+    .muted { color: var(--light); font-size: .86rem; }
+
+    @media (max-width: 980px) {
+      .hero-grid, .two-col, .reviews, .footer-grid { grid-template-columns: 1fr; }
+      .grid-4 { grid-template-columns: repeat(2,1fr); }
+      .grid-3 { grid-template-columns: 1fr; }
+      .filters { grid-template-columns: repeat(2, 1fr); }
+      .seal-grid { grid-template-columns: repeat(2,1fr); }
+      .topbar { grid-template-columns: 1fr auto; }
+      .search-wrap { grid-column: 1 / -1; }
+      nav ul { overflow-x: auto; white-space: nowrap; }
     }
-
-    .footer-logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2rem;
-      letter-spacing: 4px;
-      margin-bottom: 16px;
-    }
-
-    .footer-logo span { color: var(--accent); }
-    .footer-desc { font-size: 0.85rem; color: var(--light); line-height: 1.7; max-width: 280px; }
-
-    .footer-col h4 {
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      margin-bottom: 20px;
-    }
-
-    .footer-col ul { list-style: none; }
-    .footer-col li { margin-bottom: 10px; }
-    .footer-col a { font-size: 0.85rem; color: var(--light); text-decoration: none; transition: color 0.2s; }
-    .footer-col a:hover { color: var(--white); }
-
-    .footer-bottom {
-      padding-top: 24px;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.75rem;
-      color: var(--light);
-    }
-
-    .whatsapp-float {
-      position: fixed;
-      bottom: 28px;
-      right: 28px;
-      z-index: 999;
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: #fff;
-      color: #111;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      text-decoration: none;
-      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
-      transition: all 0.25s;
-    }
-
-    .whatsapp-float:hover { transform: scale(1.12); }
-
-    @media (max-width: 768px) {
-      nav { padding: 16px 20px; }
-      .nav-links { display: none; }
-      .hero { padding: 0 20px; }
-      .hero-title { font-size: 4.1rem; }
-      .hero-shoe-img { display: none; }
-      .section { padding: 64px 20px; }
-      .banner { margin: 0 20px; flex-direction: column; text-align: center; }
-      .footer-top { grid-template-columns: 1fr 1fr; }
-      .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .hero-tag { animation: fadeUp 0.6s 0.1s both; }
-    .hero-title { animation: fadeUp 0.6s 0.25s both; }
-    .hero-sub { animation: fadeUp 0.6s 0.4s both; }
-    .hero-cta { animation: fadeUp 0.6s 0.55s both; }
   </style>
 </head>
 <body>
-  <nav id="navbar">
-    <div class="nav-logo">VF <span>SHOES</span></div>
-    <ul class="nav-links">
-      <li><a href="#produtos">Produtos</a></li>
-      <li><a href="#sobre">Sobre</a></li>
-      <li><a href="#contato">Contato</a></li>
-    </ul>
-    <button class="nav-cart">
-      🛒 Carrinho
-      <span class="cart-count" id="cartCount">0</span>
-    </button>
-  </nav>
+  <header>
+    <div class="container">
+      <div class="topbar">
+        <div class="logo">VF <span>SHOES</span></div>
+
+        <div class="search-wrap">
+          <input id="searchInput" class="search-input" placeholder="Buscar por modelo, marca ou tecnologia..." />
+          <div id="suggestions" class="suggestions"></div>
+        </div>
+
+        <button class="head-btn" onclick="toggleWishlistOnly()">❤ Favoritos</button>
+        <button class="head-btn cart-btn" onclick="openCart()">🛒 Carrinho <span id="cartCount" class="cart-count">0</span></button>
+      </div>
+
+      <nav>
+        <ul>
+          <li><a href="#promo">Promoções</a></li>
+          <li><a href="#categorias">Categorias</a></li>
+          <li><a href="#produtos">Produtos</a></li>
+          <li><a href="#marcas">Marcas</a></li>
+          <li><a href="#sobre">Sobre Nós</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contato">Atendimento</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
   <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-grid"></div>
-    <div class="hero-content">
-      <span class="hero-tag">✦ Nova Coleção 2026</span>
-      <h1 class="hero-title" id="heroTitle">PASSO<br>A FRENTE</h1>
-      <p class="hero-sub">Visual premium em tons de preto, branco e cinza. Um catálogo moderno, elegante e muito mais animado.</p>
-      <button class="hero-cta" onclick="document.getElementById('produtos').scrollIntoView({behavior:'smooth'})">Ver Coleção →</button>
-    </div>
-    <div class="hero-shoe-img">👟</div>
-    <div class="hero-scroll">
-      <div class="hero-scroll-line"></div>
-      <span>SCROLL</span>
+    <div class="container hero-grid">
+      <div>
+        <small style="color:var(--light); letter-spacing:2px; text-transform:uppercase;">Coleção Premium 2026</small>
+        <h1 id="heroTitle">PASSO À FRENTE <br /> NO SEU ESTILO</h1>
+        <p>Visual inspirado em grandes marcas esportivas, catálogo completo, filtros avançados e compra finalizada no WhatsApp com modelo, tamanho e valor já preenchidos.</p>
+        <div class="hero-cta">
+          <button class="btn primary" onclick="jump('produtos')">Ver lançamentos</button>
+          <button class="btn" onclick="jump('sizeTable')">Tabela de tamanhos</button>
+        </div>
+      </div>
+      <div class="hero-media card">
+        <video controls preload="metadata" poster="https://images.unsplash.com/photo-1608231387042-66d1773070a5?q=80&w=1600&auto=format&fit=crop">
+          <source src="https://cdn.coverr.co/videos/coverr-a-futuristic-sneaker-1740/1080p.mp4" type="video/mp4" />
+        </video>
+      </div>
     </div>
   </section>
 
-  <section class="section" id="produtos">
-    <div class="section-header">
-      <div class="section-tag">✦ Catálogo</div>
-      <h2 class="section-title">NOSSOS MODELOS</h2>
-    </div>
-
-    <div class="filter-bar" id="filterBar">
-      <button class="filter-btn active" data-cat="all">Todos</button>
-      <button class="filter-btn" data-cat="Nike">Nike</button>
-      <button class="filter-btn" data-cat="Adidas">Adidas</button>
-      <button class="filter-btn" data-cat="New Balance">New Balance</button>
-      <button class="filter-btn" data-cat="Puma">Puma</button>
-      <button class="filter-btn" data-cat="Vans">Vans</button>
-    </div>
-
-    <div class="products-grid" id="productsGrid"></div>
-  </section>
-
-  <div class="banner">
-    <div class="banner-text">
-      <h2>MINIMALISTA, BONITO E DAHORA</h2>
-      <p>Layout atualizado com animações, contraste forte e tipografia dinâmica.</p>
-    </div>
-    <a href="#produtos" class="banner-link">Ver Produtos</a>
-  </div>
-
-  <footer id="sobre">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="footer-logo">VF <span>SHOES</span></div>
-        <p class="footer-desc">Sua loja de tênis com estilo urbano, foco em experiência premium e finalização rápida.</p>
+  <main class="container">
+    <section id="promo" class="section">
+      <div class="promo-banner">
+        <div>
+          <h2>Banner principal de promoções</h2>
+          <p>Até 12x sem juros no cartão • Frete rápido • Atendimento humano no WhatsApp.</p>
+        </div>
+        <button class="btn" onclick="jump('produtos')">Comprar pelo WhatsApp</button>
       </div>
-      <div class="footer-col" id="contato">
-        <h4>Contato</h4>
-        <ul>
-          <li><a href="#">📍 Sua cidade, Brasil</a></li>
-          <li><a href="#">📱 WhatsApp</a></li>
-          <li><a href="#">📸 Instagram</a></li>
-        </ul>
+    </section>
+
+    <section id="categorias" class="section">
+      <h2>Categorias em destaque</h2>
+      <div class="grid-4">
+        <article class="card cat">Corrida <small>Performance e conforto</small></article>
+        <article class="card cat">Lifestyle <small>Dia a dia urbano</small></article>
+        <article class="card cat">Skate <small>Durabilidade e grip</small></article>
+        <article class="card cat">Academia <small>Estabilidade total</small></article>
       </div>
-      <div class="footer-col">
-        <h4>Marcas</h4>
-        <ul>
-          <li><a href="#">Nike</a></li>
-          <li><a href="#">Adidas</a></li>
-          <li><a href="#">New Balance</a></li>
-          <li><a href="#">Puma</a></li>
-          <li><a href="#">Vans</a></li>
-        </ul>
+    </section>
+
+    <section id="produtos" class="section">
+      <h2>Produtos em alta & lançamentos</h2>
+
+      <div class="filters">
+        <input id="filterPrice" type="number" placeholder="Preço máx (R$)" />
+        <select id="filterBrand"><option value="all">Marca</option></select>
+        <select id="filterCategory"><option value="all">Categoria</option><option>Corrida</option><option>Lifestyle</option><option>Skate</option><option>Academia</option></select>
+        <select id="filterGender"><option value="all">Gênero</option><option>Masculino</option><option>Feminino</option><option>Unissex</option></select>
+        <select id="filterColor"><option value="all">Cor</option><option>Preto</option><option>Branco</option><option>Cinza</option><option>Preto/Branco</option></select>
+        <select id="filterUse"><option value="all">Tipo de uso</option><option>Treino</option><option>Casual</option><option>Competição</option><option>Skate</option></select>
       </div>
-      <div class="footer-col">
-        <h4>Loja</h4>
-        <ul>
-          <li><a href="#">Novidades</a></li>
-          <li><a href="#">Promoções</a></li>
-          <li><a href="#">Trocas & Devoluções</a></li>
-          <li><a href="#">FAQ</a></li>
-        </ul>
+
+      <div id="products" class="products"></div>
+    </section>
+
+    <section id="sizeTable" class="section two-col">
+      <div>
+        <h2>Tabela de conversão de tamanhos</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>BR</th><th>US</th><th>EU</th><th>CM</th></tr></thead>
+            <tbody>
+              <tr><td>36</td><td>5</td><td>38</td><td>23,5</td></tr>
+              <tr><td>38</td><td>7</td><td>40</td><td>25,0</td></tr>
+              <tr><td>40</td><td>8,5</td><td>42</td><td>26,5</td></tr>
+              <tr><td>42</td><td>10</td><td>44</td><td>28,0</td></tr>
+              <tr><td>44</td><td>11,5</td><td>46</td><td>29,5</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2026 VF SHOES. Todos os direitos reservados.</span>
-      <span>Feito com ❤️ para você</span>
+      <div>
+        <h2>Descrição técnica & uso</h2>
+        <div class="card" style="padding:16px;">
+          <p><strong>Materiais:</strong> mesh respirável, couro premium e espuma de alta resposta.</p>
+          <p><strong>Tecnologias:</strong> amortecimento responsivo, placa estável e sola aderente.</p>
+          <p><strong>Peso médio:</strong> 280g (nº 40).</p>
+          <p><strong>Indicação de uso:</strong> corrida leve, treino funcional, caminhada e uso urbano.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Avaliações e comentários</h2>
+      <div class="reviews">
+        <article class="card review"><strong>★★★★★ — Lucas P.</strong><p>Confortável e muito bonito. Atendimento no WhatsApp foi rápido.</p></article>
+        <article class="card review"><strong>★★★★☆ — Maria S.</strong><p>Chegou certinho, material top e numeração bateu com a tabela.</p></article>
+        <article class="card review"><strong>★★★★★ — João R.</strong><p>Curti a experiência do site e finalizar no WhatsApp foi muito prático.</p></article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Produtos relacionados</h2>
+      <div id="related" class="grid-3"></div>
+    </section>
+
+    <section id="marcas" class="section">
+      <h2>Marcas parceiras</h2>
+      <div class="brand-strip">
+        <span class="brand-chip">Nike</span>
+        <span class="brand-chip">Adidas</span>
+        <span class="brand-chip">New Balance</span>
+        <span class="brand-chip">Puma</span>
+        <span class="brand-chip">Vans</span>
+        <span class="brand-chip">Asics</span>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Selos de segurança & pagamento</h2>
+      <div class="seal-grid">
+        <article class="card seal">🔒 SSL Seguro</article>
+        <article class="card seal">✅ Loja Verificada</article>
+        <article class="card seal">💳 Pix, Cartão e Boleto</article>
+        <article class="card seal">🚚 Envio com rastreio</article>
+      </div>
+    </section>
+
+    <section id="sobre" class="section two-col">
+      <div class="card" style="padding:16px;">
+        <h2>Sobre nós</h2>
+        <p class="muted">A VF SHOES nasceu para unir estilo e performance. Trabalhamos com curadoria de modelos em alta, com atendimento próximo e transparente.</p>
+      </div>
+      <div class="card" style="padding:16px;">
+        <h2>Trocas, envio e pagamentos</h2>
+        <p class="muted">Trocas em até 7 dias corridos após recebimento. Envio para todo o Brasil com código de rastreio. Pagamento por Pix, cartão e boleto.</p>
+      </div>
+    </section>
+
+    <section id="faq" class="section faq">
+      <h2>FAQ</h2>
+      <details><summary>Como funciona a compra?</summary><p class="muted">Você monta seu carrinho no site e finaliza no WhatsApp com os itens já preenchidos.</p></details>
+      <details><summary>Tem checkout online?</summary><p class="muted">Não. O checkout final é via WhatsApp para atendimento personalizado.</p></details>
+      <details><summary>Posso salvar meu carrinho?</summary><p class="muted">Sim, ele fica salvo automaticamente no seu navegador.</p></details>
+    </section>
+
+    <section id="contato" class="section card" style="padding:16px;">
+      <h2>Atendimento (chat e WhatsApp)</h2>
+      <p class="muted">WhatsApp: (67) 99678-1235 • Horário: Seg-Sáb 09h às 20h</p>
+      <button class="btn" onclick="openWhatsAppDirect()">Falar agora no WhatsApp</button>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <h3>Institucional</h3>
+        <a href="#sobre">Sobre nós</a>
+        <a href="#">Política de privacidade</a>
+      </div>
+      <div>
+        <h3>SAC</h3>
+        <a href="#contato">Atendimento</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div>
+        <h3>Redes sociais</h3>
+        <a href="#">Instagram</a>
+        <a href="#">TikTok</a>
+      </div>
+      <div>
+        <h3>Informações</h3>
+        <a href="#">Trocas e devoluções</a>
+        <a href="#">Formas de envio</a>
+      </div>
     </div>
   </footer>
 
-  <a class="whatsapp-float" href="#" title="Fale conosco">💬</a>
+  <a class="wa-float" href="#" onclick="openWhatsAppDirect(); return false;">💬</a>
+
+  <div id="cartOverlay" class="cart-overlay" onclick="closeCartByOverlay(event)">
+    <aside class="cart">
+      <div class="cart-head">
+        <strong style="font-size:1.2rem;">Seu carrinho</strong>
+        <button class="btn" style="float:right" onclick="closeCart()">Fechar</button>
+      </div>
+      <div id="cartItems" class="cart-items"></div>
+      <div class="cart-foot">
+        <div class="field">
+          <label>Cupom</label>
+          <input id="coupon" placeholder="Ex: VF10" />
+        </div>
+        <div class="field">
+          <label>CEP para frete</label>
+          <input id="zip" placeholder="00000-000" />
+        </div>
+        <p class="muted" id="freightResult">Frete: informe o CEP.</p>
+        <p style="margin-top:8px; font-weight:800;">Total: <span id="cartTotal">R$ 0,00</span></p>
+        <div class="prod-actions" style="margin-top:10px;">
+          <button class="btn" onclick="calcFreight()">Calcular frete</button>
+          <button class="btn primary" onclick="checkoutWhatsApp()">Checkout simples</button>
+        </div>
+      </div>
+    </aside>
+  </div>
 
   <script>
+    const WHATSAPP_NUM = '5567996781235';
+    const suggestions = ['Air Max', 'Ultraboost', 'Casual', 'Corrida', 'Skate', 'New Balance'];
+
     const products = [
-      { id: 1, brand: 'Nike', name: 'Air Max 270', price: 649.90, emoji: '👟', badge: 'MAIS VENDIDO', category: 'Nike', sizes: [37, 38, 39, 40, 41, 42] },
-      { id: 2, brand: 'Adidas', name: 'Ultraboost 22', price: 799.90, emoji: '🥿', badge: 'LANÇAMENTO', category: 'Adidas', sizes: [38, 39, 40, 41, 42, 43] },
-      { id: 3, brand: 'New Balance', name: '574 Classic', price: 459.90, emoji: '👞', badge: null, category: 'New Balance', sizes: [37, 38, 39, 40, 41, 42, 43] },
-      { id: 4, brand: 'Puma', name: 'RS-X Efekt', price: 529.90, emoji: '🩴', badge: 'NOVO', category: 'Puma', sizes: [38, 39, 40, 41, 42] },
-      { id: 5, brand: 'Vans', name: 'Old Skool Pro', price: 389.90, emoji: '👟', badge: null, category: 'Vans', sizes: [37, 38, 39, 40, 41, 42] }
+      { id: 1, brand: 'Nike', name: 'Air Max 270', price: 649.9, category: 'Corrida', gender: 'Unissex', use: 'Treino', color: 'Preto/Branco', badge: 'Em alta', stock: 12, sizes: [36,37,38,39,40,41,42], unavailable:[43,44], images: ['https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1605348532760-6753d2c43329?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?q=80&w=1200&auto=format&fit=crop'] },
+      { id: 2, brand: 'Adidas', name: 'Ultraboost 22', price: 799.9, category: 'Corrida', gender: 'Feminino', use: 'Competição', color: 'Branco', badge: 'Lançamento', stock: 7, sizes: [37,38,39,40,41,42], unavailable:[36], images: ['https://images.unsplash.com/photo-1597248881519-db089d3744a5?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1600180758895-9e8ef6a2dbe4?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?q=80&w=1200&auto=format&fit=crop'] },
+      { id: 3, brand: 'New Balance', name: '574 Classic', price: 459.9, category: 'Lifestyle', gender: 'Masculino', use: 'Casual', color: 'Cinza', badge: 'Clássico', stock: 18, sizes: [38,39,40,41,42,43,44], unavailable:[36,37], images: ['https://images.unsplash.com/photo-1549298916-f52d724204b4?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1600180758890-6f93df9f5af7?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1556906781-9a412961c28c?q=80&w=1200&auto=format&fit=crop'] },
+      { id: 4, brand: 'Puma', name: 'RS-X Efekt', price: 529.9, category: 'Academia', gender: 'Unissex', use: 'Treino', color: 'Preto', badge: 'Novo', stock: 5, sizes: [37,38,39,40,41,42], unavailable:[43,44], images: ['https://images.unsplash.com/photo-1460353581641-37baddab0fa2?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1511556532299-8f662fc26c06?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1518049362265-d5b2a6467637?q=80&w=1200&auto=format&fit=crop'] },
+      { id: 5, brand: 'Vans', name: 'Old Skool Pro', price: 389.9, category: 'Skate', gender: 'Unissex', use: 'Skate', color: 'Preto', badge: 'Skate', stock: 11, sizes: [36,37,38,39,40,41,42], unavailable:[43], images: ['https://images.unsplash.com/photo-1560769629-975ec94e6a86?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1584735175097-719d848f8449?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1575537302964-96cd47c06b1b?q=80&w=1200&auto=format&fit=crop'] }
     ];
 
-    function renderProducts(cat = 'all') {
-      const grid = document.getElementById('productsGrid');
-      const filtered = cat === 'all' ? products : products.filter((p) => p.category === cat);
-      grid.innerHTML = filtered.map((p) => `
-        <div class="product-card reveal-item" data-id="${p.id}">
-          <div class="product-img-wrap">
-            <div class="product-emoji">${p.emoji}</div>
-            ${p.badge ? `<div class="product-badge">${p.badge}</div>` : ''}
+    let cart = JSON.parse(localStorage.getItem('vf_cart') || '[]');
+    let favoritesOnly = false;
+    const favoriteSet = new Set(JSON.parse(localStorage.getItem('vf_favs') || '[]'));
+
+    const byId = (id) => document.getElementById(id);
+    const money = (v) => `R$ ${v.toFixed(2).replace('.', ',')}`;
+
+    function splitHeroLetters() {
+      const title = byId('heroTitle');
+      const text = title.innerHTML.replace('<br>', '\n');
+      title.innerHTML = text.split('').map((c) => {
+        if (c === '\n') return '<br>';
+        if (c === ' ') return '<span class="letter">&nbsp;</span>';
+        return `<span class="letter">${c}</span>`;
+      }).join('');
+    }
+
+    function animateTitleByScroll() {
+      const letters = document.querySelectorAll('.letter');
+      const progress = Math.min(window.scrollY / Math.max(document.body.scrollHeight - innerHeight, 1), 1);
+      letters.forEach((el, i) => {
+        const t = Math.max(0, Math.min(1, progress + (i % 7) * .06));
+        const c = Math.round(255 - t * 120);
+        el.style.color = `rgb(${c},${c},${c})`;
+        el.style.transform = `translateY(${Math.sin((progress * 9) + i * .5) * 1.8}px)`;
+      });
+    }
+
+    function renderBrandOptions() {
+      const brands = [...new Set(products.map(p => p.brand))];
+      byId('filterBrand').innerHTML = '<option value="all">Marca</option>' + brands.map((b) => `<option>${b}</option>`).join('');
+    }
+
+    function getSelectedFilters() {
+      return {
+        q: byId('searchInput').value.toLowerCase().trim(),
+        brand: byId('filterBrand').value,
+        category: byId('filterCategory').value,
+        gender: byId('filterGender').value,
+        color: byId('filterColor').value,
+        use: byId('filterUse').value,
+        maxPrice: Number(byId('filterPrice').value || Infinity)
+      };
+    }
+
+    function applyFilters() {
+      const f = getSelectedFilters();
+      return products.filter((p) => {
+        const matchText = !f.q || `${p.brand} ${p.name} ${p.category} ${p.use}`.toLowerCase().includes(f.q);
+        const matchBrand = f.brand === 'all' || p.brand === f.brand;
+        const matchCategory = f.category === 'all' || p.category === f.category;
+        const matchGender = f.gender === 'all' || p.gender === f.gender;
+        const matchColor = f.color === 'all' || p.color === f.color;
+        const matchUse = f.use === 'all' || p.use === f.use;
+        const matchPrice = p.price <= f.maxPrice;
+        const matchFav = !favoritesOnly || favoriteSet.has(p.id);
+        return matchText && matchBrand && matchCategory && matchGender && matchColor && matchUse && matchPrice && matchFav;
+      });
+    }
+
+    function renderProducts() {
+      const filtered = applyFilters();
+      byId('products').innerHTML = filtered.map((p) => `
+        <article class="card">
+          <div class="product-img">
+            <img loading="lazy" src="${p.images[0]}" alt="${p.name}" id="img-${p.id}" />
+            <span class="badge">${p.badge}</span>
           </div>
-          <div class="product-info">
-            <div class="product-brand">${p.brand}</div>
-            <div class="product-name">${p.name}</div>
-            <div class="product-price">R$ ${p.price.toFixed(2).replace('.', ',')}</div>
-            <div class="product-sizes">${p.sizes.map((s) => `<span class="size-tag">${s}</span>`).join('')}</div>
-            <div class="product-actions">
-              <button class="btn-details">Ver Detalhes</button>
-              <button class="btn-cart">+ Carrinho</button>
+
+          <div class="angles">
+            ${p.images.map((_, idx) => `<button onclick="swapAngle(${p.id}, ${idx})">${idx + 1}</button>`).join('')}
+          </div>
+
+          <div class="prod-body">
+            <div class="brand">${p.brand}</div>
+            <h3 class="name">${p.name}</h3>
+            <div class="stock ${p.stock > 7 ? 'ok' : 'low'}">${p.stock > 7 ? 'Estoque disponível' : 'Últimas unidades'} (${p.stock})</div>
+            <div class="price">${money(p.price)}</div>
+            <div class="installments">ou 12x de ${money(p.price / 12)}</div>
+
+            <div class="color-list">
+              <span class="color-dot" title="Preto" style="background:#111" onclick="showColor('${p.name}','Preto')"></span>
+              <span class="color-dot" title="Branco" style="background:#e9e9e9" onclick="showColor('${p.name}','Branco')"></span>
+              <span class="color-dot" title="Cinza" style="background:#7a7a7a" onclick="showColor('${p.name}','Cinza')"></span>
+            </div>
+
+            <div class="size-list">
+              ${[36,37,38,39,40,41,42,43,44].map((s) => {
+                const available = p.sizes.includes(s);
+                return `<button class="size-btn ${available ? '' : 'off'}" ${available ? `onclick="pickSize(${p.id}, ${s}, this)"` : ''}>${s}</button>`;
+              }).join('')}
+            </div>
+
+            <div class="prod-actions">
+              <button class="btn" onclick="toggleFav(${p.id}, this)">${favoriteSet.has(p.id) ? '❤ Favorito' : '♡ Favoritar'}</button>
+              <button class="btn primary" onclick="addToCart(${p.id})">Adicionar</button>
             </div>
           </div>
-        </div>
+        </article>
       `).join('');
 
-      revealOnScroll();
+      byId('related').innerHTML = products.slice(0, 3).map((p) => `<article class="card cat">${p.brand} ${p.name}<small>${money(p.price)}</small></article>`).join('');
     }
 
-    document.getElementById('filterBar').addEventListener('click', (e) => {
-      const btn = e.target.closest('.filter-btn');
-      if (!btn) return;
-      document.querySelectorAll('.filter-btn').forEach((b) => b.classList.remove('active'));
+    function swapAngle(id, idx) {
+      const p = products.find((x) => x.id === id);
+      byId(`img-${id}`).src = p.images[idx];
+    }
+
+    function pickSize(id, size, btn) {
+      document.querySelectorAll(`[onclick*="pickSize(${id},"]`).forEach((b) => b.classList.remove('active'));
       btn.classList.add('active');
-      renderProducts(btn.dataset.cat);
-    });
+      const p = products.find((x) => x.id === id);
+      p.selectedSize = size;
+    }
 
-    function prepareHeroLetters() {
-      const hero = document.getElementById('heroTitle');
-      const raw = hero.innerHTML;
-      const plain = raw.replace('<br>', '\n');
-      const wrapped = plain.split('').map((char) => {
-        if (char === '\n') return '<br>';
-        if (char === ' ') return '<span class="scroll-letter">&nbsp;</span>';
-        return `<span class="scroll-letter">${char}</span>`;
+    function addToCart(id) {
+      const p = products.find((x) => x.id === id);
+      const size = p.selectedSize || p.sizes[0];
+      const key = `${id}-${size}`;
+      const row = cart.find((c) => c.key === key);
+      if (row) row.qty += 1;
+      else cart.push({ key, id, size, qty: 1 });
+      persistCart();
+      openCart();
+    }
+
+    function removeFromCart(key) {
+      cart = cart.filter((item) => item.key !== key);
+      persistCart();
+    }
+
+    function applyCoupon(total) {
+      const code = byId('coupon').value.trim().toUpperCase();
+      if (code === 'VF10') return total * 0.9;
+      return total;
+    }
+
+    function renderCart() {
+      byId('cartCount').textContent = cart.reduce((acc, cur) => acc + cur.qty, 0);
+      if (!cart.length) {
+        byId('cartItems').innerHTML = '<p class="muted">Seu carrinho está vazio.</p>';
+        byId('cartTotal').textContent = money(0);
+        return;
+      }
+
+      byId('cartItems').innerHTML = cart.map((item) => {
+        const p = products.find((x) => x.id === item.id);
+        return `
+          <div class="item">
+            <img src="${p.images[0]}" alt="${p.name}" />
+            <div>
+              <strong>${p.name}</strong>
+              <div class="muted">${p.brand} • Nº ${item.size} • Qtd ${item.qty}</div>
+              <div>${money(p.price * item.qty)}</div>
+            </div>
+            <button class="btn" onclick="removeFromCart('${item.key}')">x</button>
+          </div>
+        `;
       }).join('');
-      hero.innerHTML = wrapped;
+
+      const subtotal = cart.reduce((sum, item) => {
+        const p = products.find((x) => x.id === item.id);
+        return sum + (p.price * item.qty);
+      }, 0);
+
+      byId('cartTotal').textContent = money(applyCoupon(subtotal));
     }
 
-    function animateHeroByScroll() {
-      const letters = document.querySelectorAll('.scroll-letter');
-      const max = Math.max(document.body.scrollHeight - window.innerHeight, 1);
-      const progress = Math.min(window.scrollY / max, 1);
+    function persistCart() {
+      localStorage.setItem('vf_cart', JSON.stringify(cart));
+      renderCart();
+    }
 
-      letters.forEach((letter, idx) => {
-        const offset = (idx % 8) * 0.08;
-        const local = Math.max(0, Math.min(1, progress + offset));
-        const tone = Math.round(255 - local * 125);
-        letter.style.color = `rgb(${tone}, ${tone}, ${tone})`;
-        letter.style.transform = `translateY(${Math.sin((progress * 7) + idx * 0.6) * 2}px)`;
+    function calcFreight() {
+      const zip = byId('zip').value.replace(/\D/g, '');
+      if (zip.length !== 8) {
+        byId('freightResult').textContent = 'CEP inválido. Exemplo: 79000000';
+        return;
+      }
+      const base = 19.9 + (zip[0] === '0' ? 10 : 0);
+      byId('freightResult').textContent = `Frete estimado: ${money(base)} (3-7 dias úteis)`;
+    }
+
+    function checkoutWhatsApp() {
+      if (!cart.length) return alert('Seu carrinho está vazio.');
+
+      const subtotal = cart.reduce((sum, item) => {
+        const p = products.find((x) => x.id === item.id);
+        return sum + (p.price * item.qty);
+      }, 0);
+
+      const total = applyCoupon(subtotal);
+      const zip = byId('zip').value || 'não informado';
+      const coupon = byId('coupon').value || 'sem cupom';
+
+      let msg = 'Olá! Quero finalizar meu pedido da VF SHOES:%0A%0A';
+      cart.forEach((item, i) => {
+        const p = products.find((x) => x.id === item.id);
+        msg += `${i + 1}. ${p.brand} - ${p.name}%0A`;
+        msg += `   Nº: ${item.size}%0A`;
+        msg += `   Qtd: ${item.qty}%0A`;
+        msg += `   Valor: ${money(p.price * item.qty)}%0A%0A`;
+      });
+      msg += `Cupom: ${coupon}%0A`;
+      msg += `CEP: ${zip}%0A`;
+      msg += `Total: ${money(total)}%0A%0APode confirmar disponibilidade e pagamento?`;
+
+      window.open(`https://wa.me/${WHATSAPP_NUM}?text=${msg}`, '_blank');
+    }
+
+    function openWhatsAppDirect() {
+      window.open(`https://wa.me/${WHATSAPP_NUM}?text=Olá! Vim pelo site da VF SHOES e quero atendimento.`, '_blank');
+    }
+
+    function openCart() { byId('cartOverlay').classList.add('open'); }
+    function closeCart() { byId('cartOverlay').classList.remove('open'); }
+    function closeCartByOverlay(e) { if (e.target.id === 'cartOverlay') closeCart(); }
+
+    function toggleFav(id, btn) {
+      if (favoriteSet.has(id)) favoriteSet.delete(id);
+      else favoriteSet.add(id);
+      localStorage.setItem('vf_favs', JSON.stringify([...favoriteSet]));
+      btn.textContent = favoriteSet.has(id) ? '❤ Favorito' : '♡ Favoritar';
+    }
+
+    function toggleWishlistOnly() {
+      favoritesOnly = !favoritesOnly;
+      renderProducts();
+    }
+
+    function showColor(model, color) {
+      console.log(`Cor escolhida: ${model} - ${color}`);
+    }
+
+    function jump(id) { byId(id).scrollIntoView({ behavior: 'smooth' }); }
+
+    function showSuggestions() {
+      const q = byId('searchInput').value.trim().toLowerCase();
+      if (!q) { byId('suggestions').classList.remove('show'); return; }
+      const list = suggestions.filter((s) => s.toLowerCase().includes(q));
+      byId('suggestions').innerHTML = list.map((s) => `<button onclick="useSuggestion('${s}')">${s}</button>`).join('');
+      byId('suggestions').classList.toggle('show', list.length > 0);
+    }
+
+    function useSuggestion(text) {
+      byId('searchInput').value = text;
+      byId('suggestions').classList.remove('show');
+      renderProducts();
+    }
+
+    function bindEvents() {
+      ['filterPrice','filterBrand','filterCategory','filterGender','filterColor','filterUse'].forEach((id) => {
+        byId(id).addEventListener('input', renderProducts);
+        byId(id).addEventListener('change', renderProducts);
+      });
+      byId('searchInput').addEventListener('input', () => { showSuggestions(); renderProducts(); });
+      window.addEventListener('scroll', animateTitleByScroll, { passive: true });
+      byId('coupon').addEventListener('input', renderCart);
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.search-wrap')) byId('suggestions').classList.remove('show');
       });
     }
 
-    function revealOnScroll() {
-      const cards = document.querySelectorAll('.reveal-item');
-      cards.forEach((el, idx) => {
-        const top = el.getBoundingClientRect().top;
-        const visible = top < window.innerHeight - 80;
-        if (visible) {
-          setTimeout(() => el.classList.add('revealed'), idx * 55);
-        }
-      });
-    }
-
-    function handleScroll() {
-      const nav = document.getElementById('navbar');
-      nav.classList.toggle('scrolled', window.scrollY > 18);
-      animateHeroByScroll();
-      revealOnScroll();
-    }
-
-    prepareHeroLetters();
+    splitHeroLetters();
+    animateTitleByScroll();
+    renderBrandOptions();
     renderProducts();
-    animateHeroByScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    renderCart();
+    bindEvents();
   </script>
 </body>
 </html>
