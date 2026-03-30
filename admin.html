@@ -83,6 +83,7 @@
 
     function persist() {
       localStorage.setItem('vf_products_custom', JSON.stringify(products));
+      localStorage.setItem('vf_products_updated_at', String(Date.now()));
       renderRows();
     }
 

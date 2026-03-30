@@ -106,6 +106,7 @@
           <div id="suggestions" class="suggestions"></div>
         </div>
         <button class="btn" onclick="location.href='admin.html'">Admin Produtos</button>
+        <button class="btn" onclick="syncFromAdmin()">Sincronizar</button>
         <button class="btn cart-btn" onclick="openCart()">🛒 Carrinho <span id="cartCount" class="cart-count">0</span></button>
       </div>
       <nav>
@@ -407,7 +408,7 @@
       byId('searchInput').addEventListener('input', () => { buildSuggestions(); renderProducts(); });
       window.addEventListener('scroll', animateTitle, { passive: true });
       document.addEventListener('click', (e) => { if (!e.target.closest('.search-wrap')) byId('suggestions').classList.remove('show'); });
-      window.addEventListener('storage', () => { products = getProducts(); initFilterOptions(); renderProducts(); renderCart(); });
+      window.addEventListener('storage', (e) => { if (!e.key || e.key === 'vf_products_custom' || e.key === 'vf_products_updated_at') { syncFromAdmin(); } });
     }
 
     splitTitle();
@@ -416,6 +417,13 @@
     renderProducts();
     renderCart();
     bind();
+
+    function syncFromAdmin() {
+      products = getProducts();
+      initFilterOptions();
+      renderProducts();
+      renderCart();
+    }
   </script>
 </body>
 </html>
