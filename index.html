@@ -3,68 +3,67 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VF SHOES — Catálogo</title>
+  <title>VF SHOES — Premium Sneakers</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="header">
-    <a class="logo" href="index.html">VF<span>.</span>SHOES</a>
-    <nav class="top-actions">
-      <a class="btn ghost" href="admin.html">Admin</a>
-      <button class="btn ghost" id="theme-toggle" type="button">🌙 Tema</button>
-    </nav>
+  <header class="topbar">
+    <a href="#" class="logo">VF<span>.</span>SHOES</a>
+    <div class="top-actions">
+      <button id="theme-toggle" class="btn ghost" type="button">🌙 Tema</button>
+      <button id="scroll-top" class="btn ghost" type="button" aria-label="Voltar ao topo">↑ Topo</button>
+    </div>
   </header>
 
   <main class="container">
-    <section class="hero card">
-      <h1>Catálogo Premium</h1>
-      <p>Filtros avançados, ordenação, tags e experiência refinada para e-commerce.</p>
+    <section class="card hero">
+      <h1>Sneakers Premium</h1>
+      <p>Catálogo com filtros avançados, ordenação, tags, parcelas, lightbox, microinterações e modo escuro/claro.</p>
     </section>
 
-    <section class="controls card">
-      <h2>Filtros & Ordenação</h2>
-      <div class="grid controls-grid">
-        <label>Categoria
-          <select id="filter-category"></select>
-        </label>
-        <label>Marca
-          <select id="filter-brand"></select>
-        </label>
-        <label>Tag
-          <select id="filter-tag"></select>
-        </label>
-        <label>Tamanho disponível
-          <select id="filter-size"></select>
-        </label>
-        <label>Avaliação mínima
-          <select id="filter-rating"></select>
-        </label>
+    <section class="card controls">
+      <h2>Filtros e Ordenação</h2>
+      <div class="controls-grid">
+        <label>Categoria<select id="filter-category"></select></label>
+        <label>Marca<select id="filter-brand"></select></label>
+        <label>Tag<select id="filter-tag"></select></label>
+        <label>Tamanho<select id="filter-size"></select></label>
+        <label>Avaliação<select id="filter-rating"></select></label>
         <label>Preço máximo
-          <input type="range" id="filter-price" min="200" max="1400" step="50" value="1400">
+          <input id="filter-price" type="range" min="200" max="1400" value="1400" step="50" />
           <small id="price-value"></small>
         </label>
-        <label>Ordenar por
-          <select id="sort-by">
-            <option value="recent">Mais recentes</option>
-            <option value="price-asc">Menor preço</option>
-            <option value="price-desc">Maior preço</option>
-            <option value="rating-desc">Mais avaliados</option>
-          </select>
-        </label>
+        <label>Ordenar<select id="sort-by">
+          <option value="recent">Mais recentes</option>
+          <option value="price-asc">Menor preço</option>
+          <option value="price-desc">Maior preço</option>
+          <option value="rating-desc">Mais avaliados</option>
+        </select></label>
       </div>
     </section>
 
-    <section class="products-section">
+    <section id="catalog-view">
       <div id="products-grid" class="products-grid"></div>
-      <div id="no-results" class="card hidden">Nenhum produto encontrado com os filtros atuais.</div>
+      <div id="no-results" class="card hidden">Nenhum produto encontrado.</div>
+    </section>
+
+    <section id="product-view" class="hidden"></section>
+
+    <section class="card">
+      <h2>Admin (MVP local)</h2>
+      <p>Atualize o estoque abaixo (simulação de backend com localStorage).</p>
+      <div id="admin-list"></div>
     </section>
   </main>
 
-  <button id="scroll-top" class="scroll-top" aria-label="Voltar ao topo">↑</button>
+  <div id="lightbox" class="lightbox hidden">
+    <button id="lightbox-close" class="btn">Fechar</button>
+    <img id="lightbox-image" alt="Imagem ampliada" />
+  </div>
 
-  <script type="module" src="js/app.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
