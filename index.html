@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VF SHOES — Sneakers Premium</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a href="#" class="logo">VF<span>.</span>SHOES</a>
+    <nav>
+      <a href="#products">Produtos</a>
+      <a href="#categories">Categorias</a>
+    </nav>
+    <div class="top-actions">
+      <button id="theme-toggle" class="icon-btn" aria-label="Alternar tema">🌙</button>
+      <button id="cart-btn" class="icon-btn" aria-label="Carrinho">🛒 <span id="cart-badge">0</span></button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>STEP YOUR GAME</h1>
+      <p>Catálogo premium com filtros avançados, busca por tags e experiência moderna.</p>
+      <a class="btn" href="#products">Explorar coleção</a>
+    </section>
+
+    <section id="products" class="section">
+      <div class="section-head">
+        <h2>Produtos</h2>
+        <div class="toolbar">
+          <label>
+            Ordenar
+            <select id="sort-select">
+              <option value="recent">Mais recentes</option>
+              <option value="price-asc">Menor preço</option>
+              <option value="price-desc">Maior preço</option>
+              <option value="rating">Mais avaliados</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div class="filters">
+        <select id="category-filter">
+          <option value="todos">Categoria: Todas</option>
+          <option value="masculino">Masculino</option>
+          <option value="feminino">Feminino</option>
+          <option value="corrida">Corrida</option>
+          <option value="lifestyle">Lifestyle</option>
+        </select>
+        <select id="brand-filter">
+          <option value="todos">Marca: Todas</option>
+        </select>
+        <select id="rating-filter">
+          <option value="0">Avaliação: Todas</option>
+          <option value="4">4★ ou mais</option>
+          <option value="4.5">4.5★ ou mais</option>
+        </select>
+        <select id="stock-filter">
+          <option value="todos">Estoque: Todos</option>
+          <option value="in">Em estoque</option>
+          <option value="low">Últimas unidades</option>
+          <option value="out">Esgotado</option>
+        </select>
+        <label>Preço até R$ <span id="price-value">2000</span>
+          <input id="price-filter" type="range" min="300" max="2000" step="50" value="2000" />
+        </label>
+        <input id="tag-search" type="text" placeholder="Buscar por tag (ex: casual, respirável)" />
+      </div>
+
+      <div id="products-grid" class="grid"></div>
+    </section>
+
+    <section id="categories" class="section">
+      <h2>Categorias</h2>
+      <div id="categories-grid" class="categories-grid"></div>
+    </section>
+
+    <section class="section">
+      <h2>Produtos relacionados</h2>
+      <p class="muted">Sugestões baseadas no produto selecionado no modal.</p>
+      <div id="related-grid" class="grid related-grid"></div>
+    </section>
+  </main>
+
+  <button id="scroll-top" aria-label="Voltar ao topo">↑</button>
+
+  <aside id="cart-panel" class="panel" aria-hidden="true">
+    <div class="panel-head">
+      <h3>Carrinho</h3>
+      <button id="cart-close" class="icon-btn">✕</button>
+    </div>
+    <div id="cart-items"></div>
+    <div class="panel-foot">
+      <strong>Total: <span id="cart-total">R$ 0,00</span></strong>
+    </div>
+  </aside>
+
+  <div id="overlay" class="overlay"></div>
+
+  <div id="product-modal" class="modal" aria-hidden="true">
+    <button id="modal-close" class="icon-btn modal-close">✕</button>
+    <img id="modal-image" alt="Imagem do produto" />
+    <div class="modal-body">
+      <h3 id="modal-title"></h3>
+      <p id="modal-stock" class="stock-pill"></p>
+      <p><strong id="modal-price"></strong> <span id="modal-installments" class="muted"></span></p>
+      <p id="modal-tags" class="tags"></p>
+      <p id="modal-desc"></p>
+      <button id="modal-add" class="btn">Adicionar ao carrinho</button>
+    </div>
+  </div>
+
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <button id="lightbox-close" class="icon-btn modal-close">✕</button>
+    <img id="lightbox-image" alt="Zoom do produto" />
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
