@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VF SHOES — One File Edition</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:#0a0a0a;--surface:#131313;--text:#f8f6f2;--muted:#9f9a92;--border:#2b2b2b;--accent:#e8ff00;
+      --ok:#16a34a;--warn:#f59e0b;--danger:#ef4444;--shadow:0 18px 34px rgba(0,0,0,.35);
+    }
+    html[data-theme='light'] { --bg:#f7f5f0;--surface:#fff;--text:#111;--muted:#5e5954;--border:#ddd6cc;--accent:#b8ce00;--shadow:0 10px 22px rgba(0,0,0,.12); }
+    *{box-sizing:border-box} body{margin:0;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text)}
+    .top{position:sticky;top:0;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:1rem 4vw;border-bottom:1px solid var(--border);background:color-mix(in oklab,var(--bg) 85%,transparent);backdrop-filter:blur(10px)}
+    .logo{font-family:'Bebas Neue',sans-serif;letter-spacing:.08em;font-size:1.8rem}.logo span{color:var(--accent)}
+    .top-actions{display:flex;gap:.5rem}.icon{border:1px solid var(--border);background:var(--surface);color:var(--text);padding:.5rem .7rem;border-radius:.6rem;cursor:pointer}
+    main{padding:1.5rem 4vw 5rem}.hero h1{font-family:'Bebas Neue';font-size:clamp(2.8rem,10vw,5.5rem);line-height:.9;margin:0}.hero p{color:var(--muted);max-width:720px}
+    .btn{border:none;background:var(--accent);color:#111;padding:.72rem 1rem;border-radius:.6rem;font-weight:700;cursor:pointer;transition:transform .2s}.btn:hover{transform:translateY(-2px)}
+    .toolbar,.filters{display:grid;gap:.7rem}.filters{grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin:1rem 0}
+    select,input{width:100%;padding:.62rem .65rem;border:1px solid var(--border);border-radius:.55rem;background:var(--surface);color:var(--text)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(245px,1fr));gap:1rem}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:.8rem;overflow:hidden;box-shadow:var(--shadow);transition:transform .25s,border-color .25s;cursor:pointer}
+    .card:hover{transform:translateY(-4px);border-color:color-mix(in oklab,var(--accent) 40%,var(--border))}
+    .card img{width:100%;aspect-ratio:1;object-fit:cover}
+    .card-body{padding:.8rem}.brand{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.muted{color:var(--muted)}
+    .price{display:flex;gap:.5rem;align-items:baseline}.old{text-decoration:line-through;color:var(--muted);font-size:.86rem}.pill{display:inline-block;padding:.25rem .5rem;border-radius:999px;font-size:.75rem}
+    .in{color:var(--ok);background:color-mix(in oklab,var(--ok) 16%,transparent)}.low{color:var(--warn);background:color-mix(in oklab,var(--warn) 16%,transparent)}.out{color:var(--danger);background:color-mix(in oklab,var(--danger) 16%,transparent)}
+    .tags{display:flex;gap:.35rem;flex-wrap:wrap}.tag{padding:.15rem .46rem;border-radius:999px;border:1px solid var(--border);font-size:.7rem;color:var(--muted)}
+    .micro{animation:bounce .36s}@keyframes bounce{0%{transform:scale(1)}50%{transform:scale(1.16)}100%{transform:scale(1)}}
+    .skeleton{height:332px;border-radius:.8rem;background:linear-gradient(90deg,color-mix(in oklab,var(--surface) 92%,#fff) 20%,color-mix(in oklab,var(--surface) 82%,#fff) 40%,color-mix(in oklab,var(--surface) 92%,#fff) 62%);background-size:400% 100%;animation:shimmer 1.15s infinite}
+    @keyframes shimmer{0%{background-position:100%}100%{background-position:0}}
+    .section-title{margin-top:2.2rem}
+    .cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.8rem}.cat{border:1px solid var(--border);background:var(--surface);padding:.8rem;border-radius:.6rem}
+    .drawer,.modal,.lightbox{position:fixed;display:none}.overlay{position:fixed;inset:0;background:rgba(0,0,0,.58);display:none;z-index:40}
+    .drawer{right:0;top:0;width:min(390px,94vw);height:100vh;z-index:50;background:var(--surface);border-left:1px solid var(--border);padding:1rem;overflow:auto}
+    .modal,.lightbox{left:50%;top:50%;transform:translate(-50%,-50%);z-index:60}
+    .modal{background:var(--surface);border:1px solid var(--border);width:min(950px,92vw);max-height:92vh;overflow:auto;border-radius:.8rem;grid-template-columns:1fr 1fr}
+    .modal img{width:100%;height:100%;object-fit:cover}.modal-body{padding:1rem}.close{position:absolute;right:.8rem;top:.8rem}
+    .lightbox{background:rgba(0,0,0,.95);width:min(1000px,95vw);height:min(90vh,760px);place-items:center;border-radius:.6rem}.lightbox img{max-width:100%;max-height:85vh;object-fit:contain}
+    #to-top{position:fixed;right:1rem;bottom:1rem;width:44px;height:44px;border:none;border-radius:50%;background:var(--accent);display:none;cursor:pointer;z-index:20}
+    .pdp{display:none;border:1px solid var(--border);background:var(--surface);padding:1rem;border-radius:.8rem;margin-top:1.3rem}
+    .pdp-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:1rem}.admin{display:none;border:1px solid var(--border);background:var(--surface);padding:1rem;border-radius:.7rem;margin-top:1rem}
+    @media (max-width:850px){.modal{grid-template-columns:1fr}.pdp-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="logo">VF<span>.</span>SHOES</div>
+    <div class="top-actions">
+      <button class="icon" id="theme-btn">🌙 Tema</button>
+      <button class="icon" id="admin-btn">⚙ Admin</button>
+      <button class="icon" id="cart-btn">🛒 <span id="cart-count">0</span></button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>STEP YOUR GAME</h1>
+      <p>Versão em arquivo único com filtros avançados, ordenação, tags, estoque dinâmico, PDP com URL, lightbox, parcelas, skeleton loading, dark/light mode, microinterações, relacionados e mini-dashboard admin local.</p>
+      <button class="btn" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">Explorar catálogo</button>
+    </section>
+
+    <section id="catalog" class="section-title">
+      <h2>Catálogo</h2>
+      <div class="toolbar">
+        <label>Ordenação
+          <select id="sort"><option value="recent">Mais recentes</option><option value="price-asc">Menor preço</option><option value="price-desc">Maior preço</option><option value="rating">Mais avaliados</option></select>
+        </label>
+      </div>
+      <div class="filters">
+        <select id="f-category"><option value="todos">Categoria</option></select>
+        <select id="f-brand"><option value="todos">Marca</option></select>
+        <select id="f-rating"><option value="0">Avaliação</option><option value="4">4+ estrelas</option><option value="4.5">4.5+ estrelas</option></select>
+        <select id="f-stock"><option value="todos">Estoque</option><option value="in">Em estoque</option><option value="low">Últimas unidades</option><option value="out">Esgotado</option></select>
+        <label>Preço máximo: <span id="price-value">2000</span>
+          <input id="f-price" type="range" min="250" max="2000" step="50" value="2000" />
+        </label>
+        <input id="f-tag" placeholder="Buscar por tag (corrida, casual...)" />
+      </div>
+      <div id="grid" class="grid"></div>
+    </section>
+
+    <section class="section-title">
+      <h2>Página de Categorias</h2>
+      <div id="categories" class="cats"></div>
+    </section>
+
+    <section id="pdp" class="pdp"></section>
+
+    <section class="section-title">
+      <h2>Produtos relacionados</h2>
+      <p class="muted">Baseado no último item visualizado.</p>
+      <div id="related" class="grid"></div>
+    </section>
+
+    <section id="admin" class="admin">
+      <h3>Dashboard Admin (local)</h3>
+      <p class="muted">Gerencia produtos no localStorage (simulação de backend).</p>
+      <div class="filters">
+        <select id="admin-product"></select>
+        <input id="admin-stock" type="number" min="0" placeholder="Novo estoque" />
+        <button class="btn" id="admin-update">Atualizar estoque</button>
+      </div>
+      <hr style="border-color:var(--border)">
+      <div class="filters">
+        <input id="new-name" placeholder="Nome" />
+        <input id="new-brand" placeholder="Marca" />
+        <input id="new-price" type="number" placeholder="Preço" />
+        <input id="new-category" placeholder="Categorias separadas por vírgula" />
+        <input id="new-tags" placeholder="Tags separadas por vírgula" />
+        <input id="new-image" placeholder="URL da imagem" />
+        <button class="btn" id="new-add">Adicionar produto</button>
+      </div>
+    </section>
+  </main>
+
+  <button id="to-top">↑</button>
+  <div id="overlay" class="overlay"></div>
+  <aside id="cart" class="drawer"></aside>
+
+  <div id="modal" class="modal">
+    <button class="icon close" id="modal-close">✕</button>
+    <img id="modal-img" alt="Produto" />
+    <div class="modal-body">
+      <h3 id="modal-title"></h3>
+      <p id="modal-stock"></p>
+      <p><strong id="modal-price"></strong> <span class="muted" id="modal-parcelas"></span></p>
+      <p id="modal-rating"></p>
+      <div id="modal-tags" class="tags"></div>
+      <p id="modal-desc" class="muted"></p>
+      <button class="btn" id="modal-add">Adicionar ao carrinho</button>
+      <button class="btn" id="modal-open-pdp" style="margin-left:.4rem">Abrir página do produto</button>
+    </div>
+  </div>
+
+  <div id="lightbox" class="lightbox">
+    <button class="icon close" id="lightbox-close">✕</button>
+    <img id="lightbox-img" alt="Zoom" />
+  </div>
+
+  <script>
+    const defaultProducts = [
+      {id:1,slug:'air-max-270',brand:'Nike',name:'Air Max 270',price:749.9,oldPrice:999.9,rating:4.9,stock:14,category:['masculino','lifestyle'],tags:['casual','respirável'],image:'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=900&q=80',desc:'Amortecimento Air com visual urbano premium.'},
+      {id:2,slug:'ultraboost-22',brand:'Adidas',name:'Ultraboost 22',price:899.9,oldPrice:null,rating:4.8,stock:5,category:['masculino','corrida'],tags:['corrida','espuma'],image:'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=900&q=80',desc:'Resposta energética para treinos longos.'},
+      {id:3,slug:'old-skool',brand:'Vans',name:'Old Skool',price:389.9,oldPrice:459.9,rating:4.7,stock:0,category:['lifestyle','feminino','masculino'],tags:['skate','casual'],image:'https://images.unsplash.com/photo-1465453869711-7e174808ace9?w=900&q=80',desc:'Ícone do skate e streetwear clássico.'},
+      {id:4,slug:'gel-nimbus-25',brand:'Asics',name:'Gel Nimbus 25',price:1099.9,oldPrice:1299.9,rating:4.9,stock:3,category:['corrida','masculino'],tags:['premium','corrida'],image:'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=900&q=80',desc:'Conforto superior para alto volume.'},
+      {id:5,slug:'574-core',brand:'New Balance',name:'574 Core',price:599.9,oldPrice:null,rating:4.6,stock:9,category:['lifestyle','feminino'],tags:['retro','casual'],image:'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=900&q=80',desc:'Silhueta retrô para o dia a dia.'},
+      {id:6,slug:'forum-low',brand:'Adidas',name:'Forum Low',price:649.9,oldPrice:799.9,rating:4.7,stock:7,category:['lifestyle','masculino'],tags:['couro','casual'],image:'https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=900&q=80',desc:'Visual 80s com acabamento premium.'}
+    ];
+
+    const ls = key => JSON.parse(localStorage.getItem(key) || 'null');
+    const save = (key, val) => localStorage.setItem(key, JSON.stringify(val));
+
+    let products = ls('vf_products') || defaultProducts;
+    let cart = ls('vf_cart') || [];
+    let selected = null;
+    let lastViewed = null;
+
+    const state = { category:'todos', brand:'todos', rating:0, stock:'todos', price:2000, tag:'', sort:'recent' };
+
+    const $ = id => document.getElementById(id);
+    const brl = n => `R$ ${Number(n).toFixed(2).replace('.',',')}`;
+    const parcelas = v => `em até 12x de ${brl(v/12)}`;
+    const stockMeta = s => s<=0?['Esgotado','out']:s<=5?['Últimas unidades','low']:['Em estoque','in'];
+
+    function fillFilters() {
+      const cats = [...new Set(products.flatMap(p => p.category))].sort();
+      const brands = [...new Set(products.map(p => p.brand))].sort();
+      $('f-category').innerHTML = '<option value="todos">Categoria</option>' + cats.map(c=>`<option value="${c}">${c}</option>`).join('');
+      $('f-brand').innerHTML = '<option value="todos">Marca</option>' + brands.map(b=>`<option value="${b}">${b}</option>`).join('');
+      $('admin-product').innerHTML = products.map(p=>`<option value="${p.id}">${p.brand} ${p.name}</option>`).join('');
+    }
+
+    function categoriesPage() {
+      const counter = {};
+      products.flatMap(p=>p.category).forEach(c => counter[c] = (counter[c]||0)+1);
+      $('categories').innerHTML = Object.entries(counter).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<article class="cat"><strong>${k}</strong><p class="muted">${v} produto(s)</p></article>`).join('');
+    }
+
+    function skeleton() { $('grid').innerHTML = Array.from({length:6},()=>'<div class="skeleton"></div>').join(''); }
+
+    function pipeline() {
+      return [...products]
+        .filter(p => state.category==='todos'||p.category.includes(state.category))
+        .filter(p => state.brand==='todos'||p.brand===state.brand)
+        .filter(p => p.rating >= Number(state.rating))
+        .filter(p => state.stock==='todos' || (state.stock==='in'&&p.stock>5) || (state.stock==='low'&&p.stock>0&&p.stock<=5) || (state.stock==='out'&&p.stock<=0))
+        .filter(p => p.price <= Number(state.price))
+        .filter(p => !state.tag || p.tags.some(t=>t.toLowerCase().includes(state.tag)))
+        .sort((a,b)=> state.sort==='price-asc'?a.price-b.price : state.sort==='price-desc'?b.price-a.price : state.sort==='rating'?b.rating-a.rating : b.id-a.id);
+    }
+
+    function renderGrid() {
+      skeleton();
+      setTimeout(() => {
+        const list = pipeline();
+        if (!list.length) { $('grid').innerHTML = '<p class="muted">Nenhum produto encontrado para os filtros atuais.</p>'; return; }
+        $('grid').innerHTML = list.map(p => {
+          const [st, cls] = stockMeta(p.stock);
+          return `<article class="card" data-id="${p.id}">
+              <img src="${p.image}" alt="${p.name}" class="card-image">
+              <div class="card-body">
+                <div class="brand">${p.brand}</div>
+                <h3>${p.name}</h3>
+                <div class="price"><strong>${brl(p.price)}</strong>${p.oldPrice?`<span class="old">${brl(p.oldPrice)}</span>`:''}</div>
+                <div class="muted" style="font-size:.78rem">${parcelas(p.price)}</div>
+                <p class="pill ${cls}">${st}</p>
+                <p class="muted">⭐ ${p.rating}</p>
+                <div class="tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+                <button class="btn add" ${p.stock<=0?'disabled':''} style="margin-top:.6rem">Adicionar</button>
+              </div>
+            </article>`;
+        }).join('');
+        bindCards();
+      }, 380);
+    }
+
+    function bindCards() {
+      document.querySelectorAll('.card').forEach(card => {
+        const p = products.find(x => x.id === Number(card.dataset.id));
+        card.querySelector('.card-image').onclick = ev => { ev.stopPropagation(); openLightbox(p.image); };
+        card.onclick = () => openModal(p);
+        card.querySelector('.add').onclick = ev => { ev.stopPropagation(); addToCart(p); };
+      });
+    }
+
+    function openModal(p) {
+      selected = p; lastViewed = p;
+      const [st, cls] = stockMeta(p.stock);
+      $('modal-img').src = p.image; $('modal-title').textContent = `${p.brand} ${p.name}`;
+      $('modal-stock').className = `pill ${cls}`; $('modal-stock').textContent = st;
+      $('modal-price').textContent = brl(p.price); $('modal-parcelas').textContent = parcelas(p.price);
+      $('modal-rating').textContent = `⭐ ${p.rating} (${Math.round(p.rating*52)} avaliações)`;
+      $('modal-tags').innerHTML = p.tags.map(t=>`<span class="tag">${t}</span>`).join('');
+      $('modal-desc').textContent = p.desc;
+      show('modal');
+      renderRelated();
+    }
+
+    function openLightbox(src) { $('lightbox-img').src = src; show('lightbox'); }
+
+    function show(id){ $('overlay').style.display='block'; $(id).style.display=id==='modal'?'grid':id==='lightbox'?'grid':'block'; }
+    function closeAll(){ $('overlay').style.display='none'; $('modal').style.display='none'; $('lightbox').style.display='none'; $('cart').style.display='none'; }
+
+    function addToCart(p) {
+      if (p.stock <= 0) return;
+      const item = cart.find(i=>i.id===p.id); item ? item.qty++ : cart.push({id:p.id,name:p.name,price:p.price,qty:1});
+      p.stock -= 1;
+      save('vf_products', products); save('vf_cart', cart);
+      updateCart();
+      renderGrid();
+      const btn = $('cart-btn'); btn.classList.add('micro'); setTimeout(()=>btn.classList.remove('micro'),360);
+    }
+
+    function updateCart() {
+      $('cart-count').textContent = cart.reduce((a,i)=>a+i.qty,0);
+      const total = cart.reduce((a,i)=>a+i.qty*i.price,0);
+      $('cart').innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center"><h3>Carrinho</h3><button class="icon" onclick="closeAll()">✕</button></div>`+
+        (cart.length?cart.map(i=>`<p>${i.name} x${i.qty} <strong>${brl(i.qty*i.price)}</strong></p>`).join(''):'<p class="muted">Seu carrinho está vazio.</p>')+
+        `<hr style="border-color:var(--border)"><p><strong>Total: ${brl(total)}</strong></p>`;
+      fillFilters(); categoriesPage();
+    }
+
+    function renderRelated() {
+      if (!lastViewed) { $('related').innerHTML = '<p class="muted">Abra um produto para ver recomendações.</p>'; return; }
+      const rel = products.filter(p=>p.id!==lastViewed.id && p.category.some(c=>lastViewed.category.includes(c))).slice(0,4);
+      $('related').innerHTML = rel.map(p=>`<article class="card" onclick="openModal(products.find(x=>x.id===${p.id}))"><img src="${p.image}" alt="${p.name}"><div class="card-body"><div class="brand">${p.brand}</div><strong>${p.name}</strong><p class="muted">${brl(p.price)}</p></div></article>`).join('') || '<p class="muted">Sem relacionados no momento.</p>';
+    }
+
+    function openPDP(slug) {
+      const p = products.find(x=>x.slug===slug); if (!p) return;
+      const [st, cls] = stockMeta(p.stock);
+      $('pdp').style.display='block';
+      $('pdp').innerHTML = `<div class="pdp-grid">
+          <img src="${p.image}" alt="${p.name}" style="width:100%;border-radius:.6rem;cursor:zoom-in" onclick="openLightbox('${p.image}')">
+          <div><h3>${p.brand} ${p.name}</h3><p class="pill ${cls}">${st}</p><p><strong>${brl(p.price)}</strong> <span class="muted">${parcelas(p.price)}</span></p><p class="muted">${p.desc}</p><div class="tags">${p.tags.map(t=>`<span class='tag'>${t}</span>`).join('')}</div><button class="btn" onclick="addToCart(products.find(x=>x.slug==='${p.slug}'))" ${p.stock<=0?'disabled':''}>Adicionar ao carrinho</button></div>
+        </div>`;
+      $('pdp').scrollIntoView({behavior:'smooth'});
+      renderRelated();
+    }
+
+    function pushPDP(slug){
+      const url = new URL(window.location.href); url.searchParams.set('produto', slug); history.pushState({}, '', url); openPDP(slug);
+    }
+
+    function bindUI() {
+      $('f-category').onchange = e=>{state.category=e.target.value;renderGrid()};
+      $('f-brand').onchange = e=>{state.brand=e.target.value;renderGrid()};
+      $('f-rating').onchange = e=>{state.rating=e.target.value;renderGrid()};
+      $('f-stock').onchange = e=>{state.stock=e.target.value;renderGrid()};
+      $('f-price').oninput = e=>{state.price=e.target.value;$('price-value').textContent=e.target.value;renderGrid()};
+      $('f-tag').oninput = e=>{state.tag=e.target.value.toLowerCase().trim();renderGrid()};
+      $('sort').onchange = e=>{state.sort=e.target.value;renderGrid()};
+      $('cart-btn').onclick = ()=>show('cart');
+      $('overlay').onclick = closeAll;
+      $('modal-close').onclick = closeAll;
+      $('lightbox-close').onclick = closeAll;
+      $('modal-img').onclick = ()=>openLightbox($('modal-img').src);
+      $('modal-add').onclick = ()=> selected && addToCart(selected);
+      $('modal-open-pdp').onclick = ()=> selected && (closeAll(), pushPDP(selected.slug));
+
+      $('theme-btn').onclick = ()=> {
+        const html = document.documentElement;
+        const next = html.dataset.theme==='dark' ? 'light' : 'dark';
+        html.dataset.theme = next;
+        localStorage.setItem('vf_theme', next);
+        $('theme-btn').textContent = `${next==='dark'?'🌙':'☀️'} Tema`;
+      };
+
+      window.addEventListener('scroll',()=> $('to-top').style.display = window.scrollY>260 ? 'block':'none');
+      $('to-top').onclick = ()=>window.scrollTo({top:0,behavior:'smooth'});
+
+      $('admin-btn').onclick = ()=> $('admin').style.display = $('admin').style.display==='block'?'none':'block';
+      $('admin-update').onclick = ()=> {
+        const id = Number($('admin-product').value), v = Number($('admin-stock').value);
+        if (!Number.isFinite(v) || v < 0) return alert('Estoque inválido.');
+        const p = products.find(x=>x.id===id); if (!p) return;
+        p.stock = v; save('vf_products', products); renderGrid(); categoriesPage(); updateCart(); alert('Estoque atualizado.');
+      };
+      $('new-add').onclick = ()=> {
+        const name = $('new-name').value.trim(), brand = $('new-brand').value.trim(), price = Number($('new-price').value),
+          category = $('new-category').value.split(',').map(s=>s.trim().toLowerCase()).filter(Boolean),
+          tags = $('new-tags').value.split(',').map(s=>s.trim().toLowerCase()).filter(Boolean),
+          image = $('new-image').value.trim();
+        if (!name || !brand || !price || !category.length || !image) return alert('Preencha os campos obrigatórios.');
+        const slug = name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+        products.unshift({id:Date.now(),slug,brand,name,price,oldPrice:null,rating:4.5,stock:10,category,tags,image,desc:'Produto cadastrado via painel admin local.'});
+        save('vf_products', products); fillFilters(); categoriesPage(); renderGrid(); alert('Produto adicionado.');
+      };
+
+      window.onpopstate = ()=> {
+        const slug = new URL(window.location.href).searchParams.get('produto');
+        if (slug) openPDP(slug); else $('pdp').style.display='none';
+      };
+    }
+
+    function init() {
+      const theme = localStorage.getItem('vf_theme') || 'dark';
+      document.documentElement.dataset.theme = theme;
+      $('theme-btn').textContent = `${theme==='dark'?'🌙':'☀️'} Tema`;
+      fillFilters(); categoriesPage(); renderGrid(); bindUI(); updateCart();
+      const slug = new URL(window.location.href).searchParams.get('produto'); if (slug) openPDP(slug);
+    }
+
+    init();
+  </script>
+</body>
+</html>
